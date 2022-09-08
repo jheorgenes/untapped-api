@@ -1,0 +1,43 @@
+package com.pj.untapped.service;
+
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Arrays;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.pj.untapped.domain.Address;
+import com.pj.untapped.domain.User;
+import com.pj.untapped.repositories.AddressRepository;
+import com.pj.untapped.repositories.UserRepository;
+
+@Service
+public class DBService { //Classe para instanciar objetos no banco
+	
+	//Importa os Autowired
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
+
+	@Transactional
+	public void instanciaDB() {
+		//Implementa as instancias
+		User us1 = new User(null, "Jheorgenes Warlley", "jheorgenes@gmail.com", "123456", "933.670.620-90", LocalDate.of(1993, Month.DECEMBER, 20));
+		User us2 = new User(null, "Joaquin Silva", "joaquin@gmail.com", "654321", "426.783.630-23", LocalDate.of(1989, Month.MARCH, 10));
+		
+		Address ad1 = new Address(null, "RUA GV10", "Goiânia Viva", "74000-000", "Goiânia", "Goiás", "Brasil");
+		Address ad2 = new Address(null, "Avenida T-4", "Setor Bueno", "74000-000", "Goiânia", "Goiás", "Brasil");
+		//Adiciona os relacionamentos
+		ad1.setUser(us1);
+		ad2.setUser(us1);
+		//Salva no banco de dados
+		userRepository.saveAll(Arrays.asList(us1, us2));
+		addressRepository.saveAll(Arrays.asList(ad1, ad2));
+		
+	}
+}
