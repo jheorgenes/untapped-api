@@ -1,6 +1,7 @@
 package com.pj.untapped.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
 
@@ -10,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pj.untapped.domain.Address;
+import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.User;
 import com.pj.untapped.repositories.AddressRepository;
+import com.pj.untapped.repositories.EventRepository;
 import com.pj.untapped.repositories.UserRepository;
 
 @Service
@@ -23,6 +26,9 @@ public class DBService { //Classe para instanciar objetos no banco
 	
 	@Autowired
 	private AddressRepository addressRepository;
+	
+	@Autowired
+	private EventRepository eventRepository;
 
 	@Transactional
 	public void instanciaDB() {
@@ -32,12 +38,16 @@ public class DBService { //Classe para instanciar objetos no banco
 		
 		Address ad1 = new Address(null, "RUA GV10", "Goiânia Viva", "74000-000", "Goiânia", "Goiás", "Brasil");
 		Address ad2 = new Address(null, "Avenida T-4", "Setor Bueno", "74000-000", "Goiânia", "Goiás", "Brasil");
+		
+		Event ev1 = new Event(null, "Cabaré 50 anos", "Uma festa promovida por Gustavo Lima", LocalDateTime.now(), LocalDateTime.now(), "Capa Provisória", 30000, ad2);
 		//Adiciona os relacionamentos
 		ad1.setUser(us1);
 		ad2.setUser(us1);
+		ad2.setEvent(ev1);
+		
 		//Salva no banco de dados
 		userRepository.saveAll(Arrays.asList(us1, us2));
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));
-		
+		eventRepository.saveAll(Arrays.asList(ev1));
 	}
 }

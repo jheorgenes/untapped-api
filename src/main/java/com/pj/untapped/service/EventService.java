@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.dtos.EventDTO;
+import com.pj.untapped.repositories.AddressRepository;
 import com.pj.untapped.repositories.EventRepository;
 import com.pj.untapped.service.exceptions.ObjectNotFoundException;
 
@@ -18,6 +19,9 @@ public class EventService {
 	
 	@Autowired
 	private EventRepository eventRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public Event findById(Integer id) {
 		Optional<Event> obj = eventRepository.findById(id);
@@ -29,7 +33,8 @@ public class EventService {
 	}
 
 	public Event create(@Valid EventDTO objDTO) {
-		return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity()));
+		addressRepository.save(objDTO.getAddress()); //Gravando o endereço no banco
+		return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getAddress()));
 	}
 
 	public Event update(Integer id, @Valid EventDTO objDTO) {

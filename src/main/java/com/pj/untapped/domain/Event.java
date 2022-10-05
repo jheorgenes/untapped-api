@@ -2,15 +2,15 @@ package com.pj.untapped.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -39,15 +39,15 @@ public class Event implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime deadline;
 	
-	private String photos;
+	private MultipartFile[] photos;
 	private String media;
 	private String frontCover;
 	private Integer capacity;
 	
-	@OneToMany(cascade = CascadeType.ALL)//Permite excluir todos os endereços vinculados
-	private List<Address> adresses = new ArrayList<>();
+	@OneToOne(cascade = CascadeType.ALL)//Permite excluir todos os endereços vinculados
+	private Address address;
 
-	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity) {
+	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity, Address address) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -56,5 +56,6 @@ public class Event implements Serializable {
 		this.deadline = deadline;
 		this.frontCover = frontCover;
 		this.capacity = capacity;
+		this.address = address;
 	}
 }

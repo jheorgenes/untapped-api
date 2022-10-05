@@ -78,7 +78,7 @@ public class User implements Serializable {
 		this.email = email;
 		this.password = password;
 		this.cpf = cpf;
-		this.birthDate = birthDate; //
+		this.birthDate = birthDate;
 		this.createdAt = LocalDateTime.now();
 	}
 }

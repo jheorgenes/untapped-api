@@ -4,7 +4,10 @@ import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Event;
 
 import lombok.Getter;
@@ -31,12 +34,14 @@ public class EventDTO {
 	@NotEmpty(message = "DeadLine is required")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime deadline;
-
-	private String photos;
+	
+	private MultipartFile[] photos;
 	
 	private String media;
 	
 	private String frontCover;
+	
+	private Address address;
 	
 	@NotEmpty(message = "Capacity is required")
 	private Integer capacity;
@@ -50,5 +55,6 @@ public class EventDTO {
 		this.deadline = obj.getDeadline();
 		this.frontCover = obj.getFrontCover();
 		this.capacity = obj.getCapacity();
+		this.address = obj.getAddress();
 	}
 }
