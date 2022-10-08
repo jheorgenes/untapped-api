@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.EqualsAndHashCode;
@@ -39,7 +37,7 @@ public class Event implements Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime deadline;
 	
-	private MultipartFile[] photos;
+	private String photos; 
 	private String media;
 	private String frontCover;
 	private Integer capacity;

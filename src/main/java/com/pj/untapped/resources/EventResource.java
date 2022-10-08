@@ -21,7 +21,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.dtos.EventDTO;
-import com.pj.untapped.service.AddressService;
 import com.pj.untapped.service.EventService;
 
 @CrossOrigin("*")
@@ -31,12 +30,6 @@ public class EventResource {
 
 	@Autowired
 	private EventService eventService;
-	
-	@Autowired
-	private FileResource fileResource;
-	
-	@Autowired
-	private AddressService addressService;
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<EventDTO> findById(@PathVariable Integer id){
@@ -53,8 +46,6 @@ public class EventResource {
 	@PostMapping
 	public ResponseEntity<EventDTO> create(@Valid @RequestBody EventDTO objDTO){
 		Event newObj = eventService.create(objDTO);
-		
-		fileResource.uploadMultipleFiles(newObj.getPhotos());
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();

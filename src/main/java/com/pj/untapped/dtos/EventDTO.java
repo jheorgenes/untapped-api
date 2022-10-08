@@ -2,9 +2,9 @@ package com.pj.untapped.dtos;
 
 import java.time.LocalDateTime;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.web.multipart.MultipartFile;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pj.untapped.domain.Address;
@@ -27,23 +27,24 @@ public class EventDTO {
 	@NotEmpty(message = "subTitle is required")
 	private String subTitle;
 
-	@NotEmpty(message = "DateEntry is required")
+	@NotNull(message = "DateEntry is required")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dateEntry;
 
-	@NotEmpty(message = "DeadLine is required")
+	@NotNull(message = "DeadLine is required")
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime deadline;
 	
-	private MultipartFile[] photos;
+	private String photos;
 	
 	private String media;
 	
 	private String frontCover;
 	
+	@Valid
 	private Address address;
 	
-	@NotEmpty(message = "Capacity is required")
+	@NotNull(message = "Capacity is required")
 	private Integer capacity;
 
 	public EventDTO(Event obj) {

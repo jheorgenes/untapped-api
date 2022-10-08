@@ -31,6 +31,10 @@ public class AddressService {
 	public Address create(@Valid AddressDTO objDTO) {
 		return addressRepository.save(new Address(null, objDTO.getStreet(), objDTO.getDistrict(), objDTO.getCep(), objDTO.getCity(), objDTO.getState(), objDTO.getContry()));
 	}
+	
+	public Address createObject(@Valid Address obj) {
+	    return addressRepository.save(obj);
+	}
 
 	public Address update(Integer id, @Valid AddressDTO objDTO) {
 		Address oldObj = findById(id);

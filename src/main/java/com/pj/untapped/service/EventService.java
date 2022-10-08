@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.dtos.EventDTO;
 import com.pj.untapped.repositories.AddressRepository;
@@ -33,7 +34,17 @@ public class EventService {
 	}
 
 	public Event create(@Valid EventDTO objDTO) {
-		addressRepository.save(objDTO.getAddress()); //Gravando o endereço no banco
+	    
+	    /*Aqui deve colocar a lógica para converter um obj para um objDTO do endereço, para salvá-lo.*/
+	    addressRepository.save(new Address(
+	            null, 
+	            objDTO.getAddress().getStreet(), 
+	            objDTO.getAddress().getDistrict(), 
+	            objDTO.getAddress().getCep(), 
+	            objDTO.getAddress().getCity(), 
+	            objDTO.getAddress().getState(), 
+	            objDTO.getAddress().getContry())
+	    );
 		return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getAddress()));
 	}
 
