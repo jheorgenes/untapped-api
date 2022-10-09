@@ -34,18 +34,16 @@ public class EventService {
 	}
 
 	public Event create(@Valid EventDTO objDTO) {
-	    
-	    /*Aqui deve colocar a lógica para converter um obj para um objDTO do endereço, para salvá-lo.*/
 	    addressRepository.save(new Address(
-	            null, 
-	            objDTO.getAddress().getStreet(), 
-	            objDTO.getAddress().getDistrict(), 
-	            objDTO.getAddress().getCep(), 
-	            objDTO.getAddress().getCity(), 
-	            objDTO.getAddress().getState(), 
-	            objDTO.getAddress().getContry())
+	         null, 
+	         objDTO.getAddress().getStreet(), 
+	         objDTO.getAddress().getDistrict(), 
+	         objDTO.getAddress().getCep(), 
+	         objDTO.getAddress().getCity(), 
+	         objDTO.getAddress().getState(), 
+	         objDTO.getAddress().getContry())
 	    );
-		return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getAddress()));
+	    return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getAddress()));
 	}
 
 	public Event update(Integer id, @Valid EventDTO objDTO) {

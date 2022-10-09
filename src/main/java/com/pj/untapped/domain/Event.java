@@ -56,4 +56,15 @@ public class Event implements Serializable {
 		this.capacity = capacity;
 		this.address = address;
 	}
+	
+	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity) {
+        super();
+        this.id = id;
+        this.title = title;
+        this.subTitle = subTitle;
+        this.dateEntry = dateEntry;
+        this.deadline = deadline;
+        this.frontCover = frontCover;
+        this.capacity = capacity;
+    }
 }
