@@ -29,6 +29,8 @@ public class Address implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	private String title;
+	
 	@NotEmpty(message = "Street is required")
 	private String street;
 	
@@ -65,9 +67,10 @@ public class Address implements Serializable {
 	@JoinColumn(name = "event_id")
 	private Event event;
 
-	public Address(Integer id, String street, String district, String cep, String city, String state, String contry) {
+	public Address(Integer id, String title, String street, String district, String cep, String city, String state, String contry) {
 		super();
 		this.id = id;
+		this.title = title;
 		this.street = street;
 		this.district = district;
 		this.cep = cep;

@@ -15,6 +15,8 @@ public class AddressDTO {
 
 	private Integer id;
 	
+	private String title;
+	
 	@NotEmpty(message = "Street is required")
 	private String street;
 	
@@ -43,6 +45,7 @@ public class AddressDTO {
 	
 	public AddressDTO(Address obj) {
 		this.id = obj.getId();
+		this.title = obj.getTitle();
 		this.street = obj.getStreet();
 		this.district = obj.getDistrict();
 		this.cep = obj.getCep();

@@ -36,13 +36,13 @@ public class DBService { //Classe para instanciar objetos no banco
 		User us1 = new User(null, "Jheorgenes Warlley", "jheorgenes@gmail.com", "123456", "933.670.620-90", LocalDate.of(1993, Month.DECEMBER, 20));
 		User us2 = new User(null, "Joaquin Silva", "joaquin@gmail.com", "654321", "426.783.630-23", LocalDate.of(1989, Month.MARCH, 10));
 		
-		Address ad1 = new Address(null, "RUA GV10", "Goiânia Viva", "74000-000", "Goiânia", "Goiás", "Brasil");
-		Address ad2 = new Address(null, "Avenida T-4", "Setor Bueno", "74000-000", "Goiânia", "Goiás", "Brasil");
+		Address ad1 = new Address(null,"Onze", "RUA GV10", "Goiânia Viva", "74000-000", "Goiânia", "Goiás", "Brasil");
+		Address ad2 = new Address(null,"Mercado Central", "Avenida T-4", "Setor Bueno", "74000-000", "Goiânia", "Goiás", "Brasil");
 		
 		Event ev1 = new Event(null, "Cabaré 50 anos", "Uma festa promovida por Gustavo Lima", LocalDateTime.now(), LocalDateTime.now(), "Capa Provisória", 30000, ad2);
 		//Adiciona os relacionamentos
 		ad1.setUser(us1);
-		ad2.setUser(us1);
+//		ad2.setUser(us1);
 		ad2.setEvent(ev1);
 		
 		//Salva no banco de dados

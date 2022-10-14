@@ -29,7 +29,7 @@ public class AddressService {
 	}
 
 	public Address create(@Valid AddressDTO objDTO) {
-		return addressRepository.save(new Address(null, objDTO.getStreet(), objDTO.getDistrict(), objDTO.getCep(), objDTO.getCity(), objDTO.getState(), objDTO.getContry()));
+		return addressRepository.save(new Address(null, objDTO.getTitle(), objDTO.getStreet(), objDTO.getDistrict(), objDTO.getCep(), objDTO.getCity(), objDTO.getState(), objDTO.getContry()));
 	}
 	
 	public Address createObject(@Valid Address obj) {
