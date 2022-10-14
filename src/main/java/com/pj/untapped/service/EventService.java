@@ -44,7 +44,7 @@ public class EventService {
 	         objDTO.getAddress().getState(), 
 	         objDTO.getAddress().getContry())
 	    );
-	    return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getAddress()));
+	    return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getAddress(), objDTO.getDescription()));
 	}
 
 	public Event update(Integer id, @Valid EventDTO objDTO) {

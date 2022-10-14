@@ -41,11 +41,12 @@ public class Event implements Serializable {
 	private String media;
 	private String frontCover;
 	private Integer capacity;
+	private String description;
 	
 	@OneToOne(cascade = CascadeType.ALL)//Permite excluir todos os endereços vinculados
 	private Address address;
 
-	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity, Address address) {
+	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity, Address address, String description) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -55,9 +56,10 @@ public class Event implements Serializable {
 		this.frontCover = frontCover;
 		this.capacity = capacity;
 		this.address = address;
+		this.description = description;
 	}
 	
-	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity) {
+	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity, String description) {
         super();
         this.id = id;
         this.title = title;
@@ -66,5 +68,6 @@ public class Event implements Serializable {
         this.deadline = deadline;
         this.frontCover = frontCover;
         this.capacity = capacity;
+        this.description = description;
     }
 }

@@ -46,6 +46,9 @@ public class EventDTO {
 	
 	@NotNull(message = "Capacity is required")
 	private Integer capacity;
+	
+	@NotEmpty(message = "Title is required")
+	private String description;
 
 	public EventDTO(Event obj) {
 		super();
@@ -57,5 +60,6 @@ public class EventDTO {
 		this.frontCover = obj.getFrontCover();
 		this.capacity = obj.getCapacity();
 		this.address = obj.getAddress();
+		this.description = obj.getDescription();
 	}
 }
