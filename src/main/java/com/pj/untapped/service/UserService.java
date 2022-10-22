@@ -7,7 +7,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pj.untapped.domain.User;
 import com.pj.untapped.dtos.UserDTO;
@@ -29,8 +31,10 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	@Transactional(rollbackFor = Exception.class)
 	public User create(@Valid UserDTO objDTO) {
-		User newUser = new User(null, objDTO.getUserName(), objDTO.getEmail(), objDTO.getPassword(), objDTO.getCpf(), objDTO.getBirthDate());
+	    String generatedSecuredPasswordHash = BCrypt.hashpw(objDTO.getPassword(), BCrypt.gensalt(12));
+		User newUser = new User(null, objDTO.getUserName(), objDTO.getEmail(), generatedSecuredPasswordHash, objDTO.getCpf(), objDTO.getBirthDate());
 		newUser.setAdresses(objDTO.getAdresses());
 		return userRepository.save(newUser);
 	}
@@ -62,4 +66,15 @@ public class UserService {
 		oldObj.setUpdatedAt(LocalDateTime.now());
 	}
 
+	public Optional<User> get(Integer id) {
+        return userRepository.findById(id);
+    }
+    
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
 }

@@ -1,26 +1,17 @@
 package com.pj.untapped.domain.enuns;
 
-public enum Category {
+public enum StatusTicket {
 
-	ROCK(0, "ROCK"),
-	SERTANEJO(1, "SERTANEJO"),
-	PAGODE(2, "PAGODE"),
-	SAMBA(3, "SAMBA"),
-	RAP(4, "RAP"),
-	FUNK(5, "FUNK"),
-	HIPHOP(6, "HIPHOP"),
-	MPB(7, "MPB"),
-	POP(8, "POP"),
-	ELETRONICA(9, "ELETRONICA"),
-	GOSPEL(10, "GOSPEL"),
-	STANDUP(11, "COMEDIA"),
-	CINEMA(12, "CINEMA"),
-	TEATRO(13, "TEATRO");
+	DISPONIVEL(0, "DISPONIVEL"),
+	RESERVADO(1, "RESERVADO"),
+	CANCELADO(2, "CANCELADO"),
+	INDISPONIVEL(3, "INDISPONIVEL"),
+	VENDIDO(4, "VENDIDO");
 	
 	private Integer cod;
     private String description;
     
-    private Category(Integer cod, String description) {
+    private StatusTicket(Integer cod, String description) {
         this.cod = cod;
         this.description = description;
     }
@@ -41,10 +32,10 @@ public enum Category {
         this.description = description;
     }
     
-    public static Category toEnum(Integer cod) {
+    public static StatusTicket toEnum(Integer cod) {
         if(cod == null) return null;
         
-        for(Category x : Category.values()) {
+        for(StatusTicket x : StatusTicket.values()) {
             if(cod.equals(x.getCod())) return x;
         }
         throw new IllegalArgumentException("Invalid category! " + cod);

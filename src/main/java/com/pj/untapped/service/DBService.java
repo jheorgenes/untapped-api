@@ -39,8 +39,12 @@ public class DBService { //Classe para instanciar objetos no banco
 		Address ad1 = new Address(null,"Onze", "RUA GV10", "Goiânia Viva", "74000-000", "Goiânia", "Goiás", "Brasil");
 		Address ad2 = new Address(null,"Mercado Central", "Avenida T-4", "Setor Bueno", "74000-000", "Goiânia", "Goiás", "Brasil");
 		
-		Event ev1 = new Event(null, "Cabaré 50 anos", "Uma festa promovida por Gustavo Lima", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O CABARÉ é um lugar onde além de um espetáculo, você também presencia os gigantes do sertanejo contando: histórias, tirando sarro uns dos outros e cantam as mais pedidas em churrascos, karaokês e até mesmo bares de petisco.");
-		Event ev2 = new Event(null, "Hugo e Guilherme", "NOPELO 360", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
+		Event ev1 = new Event(null, "Cabaré 50 anos", "Uma festa promovida por Eduardo Costa", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O CABARÉ é um lugar onde além de um espetáculo, você também presencia os gigantes do sertanejo contando: histórias, tirando sarro uns dos outros e cantam as mais pedidas em churrascos, karaokês e até mesmo bares de petisco.");
+		Event ev2 = new Event(null, "Hugo e Guilherme", "NOPELO 360", LocalDateTime.now(), LocalDateTime.now().plusHours(5), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
+		Event ev3 = new Event(null, "Murilo Ruff", "Ao vivão", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
+		Event ev4 = new Event(null, "Henrique e Juliano", "Caldas Contry", LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
+		Event ev5 = new Event(null, "Thiaguinho", "Tardezinha", LocalDateTime.now(), LocalDateTime.now().plusHours(5), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
+		Event ev6 = new Event(null, "3030", "Tropicaliza", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
 		//Adiciona os relacionamentos
 		ad1.setUser(us1);
 //		ad2.setUser(us1);
@@ -49,6 +53,6 @@ public class DBService { //Classe para instanciar objetos no banco
 		//Salva no banco de dados
 		userRepository.saveAll(Arrays.asList(us1, us2));
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));
-		eventRepository.saveAll(Arrays.asList(ev1, ev2));
+		eventRepository.saveAll(Arrays.asList(ev1, ev2, ev3, ev4, ev5, ev6));
 	}
 }

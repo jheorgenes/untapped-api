@@ -2,13 +2,16 @@ package com.pj.untapped.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -28,7 +31,10 @@ public class Event implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotEmpty(message = "Title is required")
 	private String title;
+	
+	@NotEmpty(message = "SubTitle is required")
 	private String subTitle;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -45,6 +51,9 @@ public class Event implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL)//Permite excluir todos os endereços vinculados
 	private Address address;
+	
+//	@OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+//	private List<Ticket> listTickets;
 
 	public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline, String frontCover, Integer capacity, Address address, String description) {
 		super();

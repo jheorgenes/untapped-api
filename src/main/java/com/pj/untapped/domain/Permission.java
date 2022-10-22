@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Permission implements Serializable {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+	@NotEmpty(message = "Name is required")
 	private String name;
 	private String module;
 	private String action;
