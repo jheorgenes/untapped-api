@@ -1,44 +1,37 @@
 package com.pj.untapped.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotEmpty;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@SuppressWarnings("unused")
 @Entity
 @Getter 
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Permission implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Permission implements GrantedAuthority, Serializable {
+    private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@NotEmpty(message = "Name is required")
-	private String name;
-	private String module;
-	private String action;
 	
-	@ManyToMany(mappedBy = "listPermissions")
-	private List<Group> listGroups = new ArrayList<>();
-	
-	public Permission(Integer id, String name, String module, String action) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.module = module;
-		this.action = action;
-	}
+	@Column
+	private String description;
+
+    @Override
+    public String getAuthority() {
+        return this.description;
+    }
 }

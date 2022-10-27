@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pj.untapped.domain.Address;
-import com.pj.untapped.domain.User;
+import com.pj.untapped.domain.User2;
 
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -51,7 +51,7 @@ public class UserDTO implements Serializable {
 		super();
 	}
 
-	public UserDTO(User obj) {
+	public UserDTO(User2 obj) {
 		super();
 		this.id = obj.getId();
 		this.userName = obj.getUserName();

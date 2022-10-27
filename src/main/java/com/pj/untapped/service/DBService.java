@@ -4,25 +4,40 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Event;
+import com.pj.untapped.domain.Permission;
 import com.pj.untapped.domain.User;
+import com.pj.untapped.domain.User2;
 import com.pj.untapped.repositories.AddressRepository;
 import com.pj.untapped.repositories.EventRepository;
+import com.pj.untapped.repositories.PermissionRepository;
+import com.pj.untapped.repositories.User2Repository;
 import com.pj.untapped.repositories.UserRepository;
 
 @Service
 public class DBService { //Classe para instanciar objetos no banco
 	
 	//Importa os Autowired
+    @Autowired
+    private UserRepository userRepository;
+    
+    @Autowired
+    private PermissionRepository permissionRepository;
+    
 	@Autowired
-	private UserRepository userRepository;
+	private User2Repository user2Repository;
 	
 	@Autowired
 	private AddressRepository addressRepository;
@@ -32,9 +47,8 @@ public class DBService { //Classe para instanciar objetos no banco
 
 	@Transactional
 	public void instanciaDB() {
-		//Implementa as instancias
-		User us1 = new User(null, "Jheorgenes Warlley", "jheorgenes@gmail.com", "123456", "933.670.620-90", LocalDate.of(1993, Month.DECEMBER, 20));
-		User us2 = new User(null, "Joaquin Silva", "joaquin@gmail.com", "654321", "426.783.630-23", LocalDate.of(1989, Month.MARCH, 10));
+		User2 us1 = new User2(null, "Jheorgenes Warlley", "jheorgenes@gmail.com", "$2a$16$WrXXZsIeq4a2kvLR.2t4Ce1MAaPaChVl5nfc8sUYrOdFLmiGa43AC", "933.670.620-90", LocalDate.of(1993, Month.DECEMBER, 20));
+		User2 us2 = new User2(null, "Joaquin Silva", "joaquin@gmail.com", "456123", "426.783.630-23", LocalDate.of(1989, Month.MARCH, 10));
 		
 		Address ad1 = new Address(null,"Onze", "RUA GV10", "Goiânia Viva", "74000-000", "Goiânia", "Goiás", "Brasil");
 		Address ad2 = new Address(null,"Mercado Central", "Avenida T-4", "Setor Bueno", "74000-000", "Goiânia", "Goiás", "Brasil");
@@ -50,9 +64,41 @@ public class DBService { //Classe para instanciar objetos no banco
 //		ad2.setUser(us1);
 		ad2.setEvent(ev1);
 		
+		
+		String senhaUser1 = encriptPassword("admin234");
+		
+		Permission per1 = new Permission();
+		per1.setDescription("ADMIN");
+		Permission per2 = new Permission();
+        per2.setDescription("MANAGER");
+        
+        User user1 = new User();
+        user1.setId(null);
+        user1.setUsername("jheorgenes");
+        user1.setPassword(senhaUser1);
+        user1.setEmail("jheorgenes@gmail.com");
+        user1.setCpf("933.670.620-90");
+        user1.setBirthDate(LocalDate.of(1993, Month.DECEMBER, 20));
+        user1.setAccountNonExpired(true);
+        user1.setAccountNonLocked(true);
+        user1.setCredentialsNonExpired(true);
+        user1.setEnabled(true);
+        user1.setPermissions(Arrays.asList(per1, per2));
+        
+        permissionRepository.saveAll(Arrays.asList(per1, per2));
+		userRepository.saveAll(Arrays.asList(user1));
+		
 		//Salva no banco de dados
-		userRepository.saveAll(Arrays.asList(us1, us2));
+		user2Repository.saveAll(Arrays.asList(us1, us2));
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2, ev3, ev4, ev5, ev6));
 	}
+
+    private String encriptPassword(String password) {
+        Map<String, PasswordEncoder> encoders = new HashMap<>();
+	    encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+	    DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
+	    passwordEncoder.setDefaultPasswordEncoderForMatches(new Pbkdf2PasswordEncoder());
+	    return passwordEncoder.encode(password);
+    }
 }

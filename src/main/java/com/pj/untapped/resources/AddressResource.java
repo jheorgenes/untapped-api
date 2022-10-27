@@ -25,7 +25,7 @@ import com.pj.untapped.service.AddressService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value = "/address")
+@RequestMapping(value = "/api/address")
 public class AddressResource {
 
 	@Autowired

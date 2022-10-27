@@ -19,17 +19,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pj.untapped.domain.User;
+import com.pj.untapped.domain.User2;
 import com.pj.untapped.dtos.UserDTO;
-import com.pj.untapped.service.UserService;
+import com.pj.untapped.service.UserService2;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value = "/users")
-public class UserResource {
+@RequestMapping(value = "/api/users")
+public class User2Resource {
 	
 	@Autowired
-	private UserService userService;
+	private UserService2 userService;
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<UserDTO> findById(@PathVariable Integer id){
@@ -45,7 +45,7 @@ public class UserResource {
 	
 	@PostMapping
 	public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO objDTO){
-		User newObj = userService.create(objDTO);
+		User2 newObj = userService.create(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 											 .buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();

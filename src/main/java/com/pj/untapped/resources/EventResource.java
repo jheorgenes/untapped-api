@@ -25,7 +25,7 @@ import com.pj.untapped.service.EventService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value = "/events")
+@RequestMapping(value = "/api/events")
 public class EventResource {
 
 	@Autowired
