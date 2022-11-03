@@ -60,7 +60,7 @@ public class Address implements Serializable {
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private User2 user;
+	private User user;
 	
 	@JsonIgnore
 	@OneToOne

@@ -42,15 +42,23 @@ public class AddressDTO {
 	private Double latitude;
 	
 	private Double longitude;
+
+    private Integer userId;
+    
+    private Integer eventId;
 	
 	public AddressDTO(Address obj) {
 		this.id = obj.getId();
 		this.title = obj.getTitle();
 		this.street = obj.getStreet();
+		this.addressComplement = obj.getAddressComplement();
+		this.addressNumber = obj.getAddressNumber();
 		this.district = obj.getDistrict();
 		this.cep = obj.getCep();
 		this.city = obj.getCity();
 		this.state = obj.getState();
 		this.contry = obj.getContry();
+		this.latitude = obj.getLatitude();
+		this.longitude = obj.getLongitude();
 	}
 }

@@ -41,6 +41,21 @@ public class Ticket implements Serializable {
     
     @NotNull(message = "Number of tickets per Rating is required")
     private Integer numberOfTicketsPerRating;
+
+    public Ticket(
+            Integer id, 
+            @NotNull(message = "ValueTicket is required") BigDecimal valueTicket,
+            @NotEmpty(message = "TicketClassification is required") String ticketClassification,
+            LocalDateTime expirationDate,
+            @NotNull(message = "Number of tickets per Rating is required") Integer numberOfTicketsPerRating) {
+        this.id = id;
+        this.valueTicket = valueTicket;
+        this.ticketClassification = ticketClassification;
+        this.expirationDate = expirationDate;
+        this.numberOfTicketsPerRating = numberOfTicketsPerRating;
+    }
+    
+    
     
 //    @JsonIgnore
 //    @ManyToOne

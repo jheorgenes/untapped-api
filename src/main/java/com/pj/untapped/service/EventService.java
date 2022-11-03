@@ -34,7 +34,8 @@ public class EventService {
 	}
 
 	public Event create(@Valid EventDTO objDTO) {
-	    addressRepository.save(new Address(
+	    Event newEvent = new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getDescription());
+	    Address address = addressRepository.save(new Address(
 	         null, 
 	         objDTO.getAddress().getTitle(),
 	         objDTO.getAddress().getStreet(), 
@@ -44,7 +45,8 @@ public class EventService {
 	         objDTO.getAddress().getState(), 
 	         objDTO.getAddress().getContry())
 	    );
-	    return eventRepository.save(new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getAddress(), objDTO.getDescription()));
+	    newEvent.setAddress(address);
+	    return eventRepository.save(newEvent);
 	}
 
 	public Event update(Integer id, @Valid EventDTO objDTO) {
@@ -64,5 +66,8 @@ public class EventService {
 		oldObj.setDeadline(objDTO.getDeadline());
 		oldObj.setFrontCover(objDTO.getFrontCover());
 		oldObj.setCapacity(objDTO.getCapacity());
+		if(objDTO.getAddress() != null) {
+		    oldObj.setAddress(objDTO.getAddress());
+		}
 	}
 }

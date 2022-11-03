@@ -3,14 +3,10 @@ package com.pj.untapped.dtos;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Ticket;
 
 import lombok.Getter;
@@ -36,10 +32,10 @@ public class TicketDTO {
     @NotNull(message = "Number of tickets per Classification is required")
     private Integer numberOfTicketsPerRating;
     
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "event_id")
-    private Event event;
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name = "event_id")
+//    private Event event;
 
     public TicketDTO(Ticket obj) {
         this.id = obj.getId();

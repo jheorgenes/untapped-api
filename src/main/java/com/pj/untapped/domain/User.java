@@ -50,9 +50,6 @@ public class User implements UserDetails, Serializable {
     @NotEmpty(message = "username is required")
     @Column(name = "user_name", unique = true) //Definido que será um username Unico
     private String username;
-
-    @Column(name = "full_name")
-    private String fullname;
     
     @Column(name = "account_non_expired")
     private Boolean accountNonExpired;
@@ -80,6 +77,9 @@ public class User implements UserDetails, Serializable {
         }
         return roles;
     }
+    
+    @Column(name = "full_name")
+    private String fullname;
 
     @NotEmpty(message = "Email is required")
     @Email(message = "Email must be valid")
@@ -106,18 +106,20 @@ public class User implements UserDetails, Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime updatedAt;
 
-
-//    public User(Integer id, String username, String email, String password, String fullname, String cpf, LocalDate birthDate) {
-//        super();
-//        this.id = id;
-//        this.username = username;
-//        this.email = email;
-//        this.password = password;
-//        this.fullname = fullname;
-//        this.cpf = cpf;
-//        this.birthDate = birthDate;
-//        this.createdAt = LocalDateTime.now();
-//    }
+    public User(Integer id, String username, String email, String password, String fullname, String cpf, LocalDate birthDate, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.fullname = fullname;
+        this.cpf = cpf;
+        this.birthDate = birthDate;
+        this.createdAt = LocalDateTime.now();
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.enabled = enabled;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
