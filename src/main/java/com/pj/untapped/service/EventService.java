@@ -34,7 +34,17 @@ public class EventService {
 	}
 
 	public Event create(@Valid EventDTO objDTO) {
-	    Event newEvent = new Event(null, objDTO.getTitle(), objDTO.getSubTitle(), objDTO.getDateEntry(), objDTO.getDeadline(), objDTO.getFrontCover(), objDTO.getCapacity(), objDTO.getDescription());
+	    Event newEvent = new Event(
+	            null, 
+	            objDTO.getTitle(), 
+	            objDTO.getSubTitle(), 
+	            objDTO.getDateEntry(), 
+	            objDTO.getDeadline(), 
+	            objDTO.getFrontCover(), 
+	            objDTO.getCapacity(), 
+	            objDTO.getDescription()
+	    );
+	    
 	    Address address = addressRepository.save(new Address(
 	         null, 
 	         objDTO.getAddress().getTitle(),

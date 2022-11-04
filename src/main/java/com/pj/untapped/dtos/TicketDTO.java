@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pj.untapped.domain.Ticket;
+import com.pj.untapped.domain.enuns.StatusTicket;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,8 @@ import lombok.Setter;
 public class TicketDTO {
 
     private Integer id;
+    
+    private String description;
 
     @NotNull(message = "ValueTicket is required")
     private BigDecimal valueTicket;
@@ -32,6 +35,8 @@ public class TicketDTO {
     @NotNull(message = "Number of tickets per Classification is required")
     private Integer numberOfTicketsPerRating;
     
+    private Integer statusTicket;
+    
 //    @JsonIgnore
 //    @ManyToOne
 //    @JoinColumn(name = "event_id")
@@ -43,5 +48,13 @@ public class TicketDTO {
         this.ticketClassification = obj.getTicketClassification();
         this.expirationDate = obj.getExpirationDate();
         this.numberOfTicketsPerRating = obj.getNumberOfTicketsPerRating();
+    }
+    
+    public StatusTicket getStatusTicket() {
+        return StatusTicket.toEnum(this.statusTicket);
+    }
+
+    public void setStatusTicket(StatusTicket statusTicket) {
+        this.statusTicket = statusTicket.getCod();
     }
 }

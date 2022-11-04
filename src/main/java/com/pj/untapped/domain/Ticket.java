@@ -12,15 +12,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.pj.untapped.domain.enuns.StatusTicket;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter 
-@Setter
+//@Getter 
+//@Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Ticket implements Serializable {
@@ -29,6 +28,9 @@ public class Ticket implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @NotEmpty(message = "Description is required")
+    private String description;
 
     @NotNull(message = "ValueTicket is required")
     private BigDecimal valueTicket;
@@ -41,34 +43,77 @@ public class Ticket implements Serializable {
     
     @NotNull(message = "Number of tickets per Rating is required")
     private Integer numberOfTicketsPerRating;
-
+    
+    private Integer statusTicket;
+    
     public Ticket(
             Integer id, 
             @NotNull(message = "ValueTicket is required") BigDecimal valueTicket,
             @NotEmpty(message = "TicketClassification is required") String ticketClassification,
             LocalDateTime expirationDate,
-            @NotNull(message = "Number of tickets per Rating is required") Integer numberOfTicketsPerRating) {
+            @NotNull(message = "Number of tickets per Rating is required") Integer numberOfTicketsPerRating,
+            StatusTicket status) {
         this.id = id;
         this.valueTicket = valueTicket;
         this.ticketClassification = ticketClassification;
         this.expirationDate = expirationDate;
         this.numberOfTicketsPerRating = numberOfTicketsPerRating;
+        this.statusTicket = (status == null) ? 0 : status.getCod();
     }
-    
-    
-    
-//    @JsonIgnore
-//    @ManyToOne
-//    @JoinColumn(name = "event_id")
-//    private Event event;
-//
-//    public Ticket(Integer id, @NotNull(message = "ValueTicket is required") BigDecimal valueTicket,
-//                    @NotEmpty(message = "TicketClassification is required") String ticketClassification,
-//                    LocalDateTime expirationDate, Integer numberOfTicketsPerRating) {
-//        this.id = id;
-//        this.valueTicket = valueTicket;
-//        this.ticketClassification = ticketClassification;
-//        this.expirationDate = expirationDate;
-//        this.numberOfTicketsPerRating = numberOfTicketsPerRating;
-//    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getValueTicket() {
+        return valueTicket;
+    }
+
+    public void setValueTicket(BigDecimal valueTicket) {
+        this.valueTicket = valueTicket;
+    }
+
+    public String getTicketClassification() {
+        return ticketClassification;
+    }
+
+    public void setTicketClassification(String ticketClassification) {
+        this.ticketClassification = ticketClassification;
+    }
+
+    public LocalDateTime getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public Integer getNumberOfTicketsPerRating() {
+        return numberOfTicketsPerRating;
+    }
+
+    public void setNumberOfTicketsPerRating(Integer numberOfTicketsPerRating) {
+        this.numberOfTicketsPerRating = numberOfTicketsPerRating;
+    }
+
+    public StatusTicket getStatusTicket() {
+        return StatusTicket.toEnum(this.statusTicket);
+    }
+
+    public void setStatusTicket(StatusTicket statusTicket) {
+        this.statusTicket = statusTicket.getCod();
+    }
 }

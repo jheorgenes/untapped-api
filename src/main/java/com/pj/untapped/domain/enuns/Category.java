@@ -2,7 +2,7 @@ package com.pj.untapped.domain.enuns;
 
 public enum Category {
 
-	ROCK(0, "ROCK"),
+	ENTRETERIMENTO(0, "ENTRETERIMENTO"),
 	SERTANEJO(1, "SERTANEJO"),
 	PAGODE(2, "PAGODE"),
 	SAMBA(3, "SAMBA"),
@@ -12,10 +12,11 @@ public enum Category {
 	MPB(7, "MPB"),
 	POP(8, "POP"),
 	ELETRONICA(9, "ELETRONICA"),
-	GOSPEL(10, "GOSPEL"),
-	STANDUP(11, "COMEDIA"),
-	CINEMA(12, "CINEMA"),
-	TEATRO(13, "TEATRO");
+	ROCK(10, "ROCK"),
+	GOSPEL(11, "GOSPEL"),
+	STANDUP(12, "COMEDIA"),
+	CINEMA(13, "CINEMA"),
+	TEATRO(14, "TEATRO");
 	
 	private Integer cod;
     private String description;
