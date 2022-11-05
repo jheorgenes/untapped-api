@@ -62,7 +62,7 @@ public class DBService { //Classe para instanciar objetos no banco
 		/*Criando um usuário*/
         User user1 = new User();
         user1.setId(null);
-        user1.setUsername("jheorgenes");
+        user1.setUsername("jheorgenes@gmail.com");
         user1.setPassword(senhaUser1);
         user1.setEmail("jheorgenes@gmail.com");
         user1.setCpf("933.670.620-90");

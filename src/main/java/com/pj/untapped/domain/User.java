@@ -49,6 +49,7 @@ public class User implements UserDetails, Serializable {
 
     @NotEmpty(message = "username is required")
     @Column(name = "user_name", unique = true) // Definido que será um username Unico
+    @Email(message = "Email must be valid")
     private String username;
 
     @Column(name = "account_non_expired")

@@ -3,6 +3,8 @@ package com.pj.untapped.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj.untapped.dtos.security.AccountCredentialsDTO;
-import com.pj.untapped.security.jwt.JwtTokenProvider;
 import com.pj.untapped.service.AuthServices;
+import com.pj.untapped.service.UserServices;
 
 @RestController
 @RequestMapping("/auth")
@@ -22,6 +24,9 @@ public class AuthResource {
     
     @Autowired
     AuthServices authServices;
+    
+    @Autowired
+    UserServices userServices;
     
     @SuppressWarnings("rawtypes")
     @PostMapping(value = "/signin")
@@ -49,9 +54,21 @@ public class AuthResource {
         return token;
     }
     
-//    @GetMapping(value = "/signin/{username}")
-//    public ResponseEntity currentUserName(@PathVariable("username") String username) {
-//    }
+    @SuppressWarnings("rawtypes")
+    @GetMapping(value = "/signin/me")
+    public ResponseEntity currentUserName() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+        String username = "";
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        
+        UserDetails loadUserByUsername = userServices.loadUserByUsername(username);
+        return ResponseEntity.ok(loadUserByUsername);
+    }
 
     private boolean checkIfParamsIsNotNull(String username, String refreshToken) {
         return refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank();
