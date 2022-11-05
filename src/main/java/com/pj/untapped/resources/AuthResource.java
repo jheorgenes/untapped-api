@@ -3,6 +3,7 @@ package com.pj.untapped.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pj.untapped.dtos.security.AccountCredentialsDTO;
+import com.pj.untapped.security.jwt.JwtTokenProvider;
 import com.pj.untapped.service.AuthServices;
 
 @RestController
@@ -46,6 +48,10 @@ public class AuthResource {
         
         return token;
     }
+    
+//    @GetMapping(value = "/signin/{username}")
+//    public ResponseEntity currentUserName(@PathVariable("username") String username) {
+//    }
 
     private boolean checkIfParamsIsNotNull(String username, String refreshToken) {
         return refreshToken == null || refreshToken.isBlank() || username == null || username.isBlank();

@@ -48,36 +48,36 @@ public class User implements UserDetails, Serializable {
     private Integer id;
 
     @NotEmpty(message = "username is required")
-    @Column(name = "user_name", unique = true) //Definido que será um username Unico
+    @Column(name = "user_name", unique = true) // Definido que será um username Unico
     private String username;
-    
+
     @Column(name = "account_non_expired")
     private Boolean accountNonExpired;
-    
+
     @Column(name = "account_non_locked")
     private Boolean accountNonLocked;
-    
+
     @Column(name = "credentials_non_expired")
     private Boolean credentialsNonExpired;
-    
+
     @Column(name = "enabled")
     private Boolean enabled;
-    
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission", 
-        joinColumns = {@JoinColumn (name = "id_user")}, 
-        inverseJoinColumns = {@JoinColumn (name = "id_permission")})
-    private List<Permission> permissions; //Relacionando muitas permissões para muitos usuários
-    
+    joinColumns = { @JoinColumn(name = "id_user") }, 
+    inverseJoinColumns = { @JoinColumn(name = "id_permission") })
+    private List<Permission> permissions; // Relacionando muitas permissões para muitos usuários
+
     /* Obtendo as permissões para validação do usuário */
-    public List<String> getRoles(){
+    public List<String> getRoles() {
         List<String> roles = new ArrayList<>();
         for (Permission permission : this.permissions) {
             roles.add(permission.getDescription());
         }
         return roles;
     }
-    
+
     @Column(name = "full_name")
     private String fullname;
 
@@ -106,7 +106,8 @@ public class User implements UserDetails, Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime updatedAt;
 
-    public User(Integer id, String username, String email, String password, String fullname, String cpf, LocalDate birthDate, Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled) {
+    public User(Integer id, String username, String email, String password, String fullname, String cpf, LocalDate birthDate, 
+            Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -125,12 +126,12 @@ public class User implements UserDetails, Serializable {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.permissions;
     }
-    
+
     @Override
     public String getPassword() {
         return this.password;
     }
-    
+
     @Override
     public String getUsername() {
         return this.username;

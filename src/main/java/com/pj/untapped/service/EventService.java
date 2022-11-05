@@ -56,6 +56,7 @@ public class EventService {
 	         objDTO.getAddress().getContry())
 	    );
 	    newEvent.setAddress(address);
+	    
 	    return eventRepository.save(newEvent);
 	}
 

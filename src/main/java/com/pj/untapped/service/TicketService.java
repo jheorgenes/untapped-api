@@ -41,6 +41,7 @@ public class TicketService {
     }
 
     public void delete(Integer id) {
+        findById(id);
         ticketRepository.deleteById(id);
     }
 
