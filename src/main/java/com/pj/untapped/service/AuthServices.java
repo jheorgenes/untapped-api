@@ -24,7 +24,6 @@ public class AuthServices {
     @Autowired
     private JwtTokenProvider tokenProvider;
     
-    
     @Autowired
     private UserRepository repository;
     

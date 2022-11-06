@@ -8,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pj.untapped.domain.enuns.StatusTicket;
 
 import lombok.EqualsAndHashCode;
@@ -45,6 +48,11 @@ public class Ticket implements Serializable {
     private Integer numberOfTicketsPerRating;
     
     private Integer statusTicket;
+    
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
     
     public Ticket(
             Integer id, 

@@ -6,13 +6,10 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 
@@ -56,10 +53,8 @@ public class Event implements Serializable {
     @OneToOne(cascade = CascadeType.ALL) // Permite excluir todos os endereços vinculados
     private Address address;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "event_ticket", joinColumns = { @JoinColumn(name = "event_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "ticket_id") })
-    private List<Ticket> listTickets;
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 
     public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline,
             String frontCover, Integer capacity, Address address, String description) {

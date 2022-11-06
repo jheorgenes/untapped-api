@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.pj.untapped.dtos.security.AccountCredentialsDTO;
 import com.pj.untapped.service.AuthServices;
 import com.pj.untapped.service.UserServices;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/auth")
 public class AuthResource {

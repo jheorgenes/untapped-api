@@ -38,6 +38,6 @@ public enum StatusTicket {
         for(StatusTicket x : StatusTicket.values()) {
             if(cod.equals(x.getCod())) return x;
         }
-        throw new IllegalArgumentException("Invalid category! " + cod);
+        throw new IllegalArgumentException("Invalid status! " + cod);
     }
 }

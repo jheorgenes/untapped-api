@@ -16,12 +16,12 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.pj.untapped.dtos.security.TokenDTO;
-import com.pj.untapped.service.exceptions.InvalidJwtAuthenticationException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.pj.untapped.dtos.security.TokenDTO;
+import com.pj.untapped.service.exceptions.InvalidJwtAuthenticationException;
 
 @Service
 public class JwtTokenProvider {
@@ -52,8 +52,9 @@ public class JwtTokenProvider {
     }
     
     public TokenDTO refreshToken(String refreshToken) {
-        if(refreshToken.contains("Bearer ")) 
+        if(refreshToken.contains("Bearer ")) {
             refreshToken = refreshToken.substring("Bearer ".length());
+        }
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT decodedJWT = verifier.verify(refreshToken);
         String username = decodedJWT.getSubject();

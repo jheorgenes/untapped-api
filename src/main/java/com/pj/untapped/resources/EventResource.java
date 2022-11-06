@@ -46,9 +46,9 @@ public class EventResource {
 	@PostMapping
 	public ResponseEntity<EventDTO> create(@Valid @RequestBody EventDTO objDTO){
 		Event newObj = eventService.create(objDTO);
-		
+		EventDTO newDTO = new EventDTO(newObj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(uri).body(newDTO);
 	}
 	
 	@PutMapping(value = "/{id}")

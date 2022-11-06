@@ -3,6 +3,9 @@ package com.pj.untapped.dtos.security;
 import java.io.Serializable;
 import java.util.Objects;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class AccountCredentialsDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
