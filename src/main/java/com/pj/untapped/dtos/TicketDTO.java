@@ -1,6 +1,5 @@
 package com.pj.untapped.dtos;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
@@ -24,7 +23,7 @@ public class TicketDTO {
     private String description;
 
     @NotNull(message = "ValueTicket is required")
-    private BigDecimal valueTicket;
+    private Double valueTicket;
 
     @NotEmpty(message = "TicketClassification is required")
     private String ticketClassification;
@@ -37,17 +36,17 @@ public class TicketDTO {
     
     private Integer statusTicket;
     
-//    @JsonIgnore
-//    @ManyToOne
-//    @JoinColumn(name = "event_id")
-//    private Event event;
+    private Integer eventId;
 
     public TicketDTO(Ticket obj) {
         this.id = obj.getId();
+        this.description = obj.getDescription();
         this.valueTicket = obj.getValueTicket();
         this.ticketClassification = obj.getTicketClassification();
         this.expirationDate = obj.getExpirationDate();
         this.numberOfTicketsPerRating = obj.getNumberOfTicketsPerRating();
+        this.statusTicket = obj.getStatusTicket().getCod();
+        this.eventId = obj.getEvent().getId();
     }
     
     public StatusTicket getStatusTicket() {

@@ -1,7 +1,10 @@
 package com.pj.untapped.dtos;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -9,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Event;
+import com.pj.untapped.domain.Ticket;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,6 +53,9 @@ public class EventDTO {
 	
 	@NotEmpty(message = "Title is required")
 	private String description;
+	
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+	private List<Ticket> tickets;
 
 	public EventDTO(Event obj) {
 		super();

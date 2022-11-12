@@ -1,7 +1,6 @@
 package com.pj.untapped.domain;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -18,11 +17,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pj.untapped.domain.enuns.StatusTicket;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-//@Getter 
-//@Setter
+@Getter 
+@Setter
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Ticket implements Serializable {
@@ -36,7 +37,7 @@ public class Ticket implements Serializable {
     private String description;
 
     @NotNull(message = "ValueTicket is required")
-    private BigDecimal valueTicket;
+    private Double valueTicket;
 
     @NotEmpty(message = "TicketClassification is required")
     private String ticketClassification;
@@ -56,12 +57,14 @@ public class Ticket implements Serializable {
     
     public Ticket(
             Integer id, 
-            @NotNull(message = "ValueTicket is required") BigDecimal valueTicket,
+            @NotEmpty(message = "Description is required") String description,
+            @NotNull(message = "ValueTicket is required") Double valueTicket,
             @NotEmpty(message = "TicketClassification is required") String ticketClassification,
             LocalDateTime expirationDate,
             @NotNull(message = "Number of tickets per Rating is required") Integer numberOfTicketsPerRating,
             StatusTicket status) {
         this.id = id;
+        this.description = description;
         this.valueTicket = valueTicket;
         this.ticketClassification = ticketClassification;
         this.expirationDate = expirationDate;
@@ -85,11 +88,11 @@ public class Ticket implements Serializable {
         this.description = description;
     }
 
-    public BigDecimal getValueTicket() {
+    public Double getValueTicket() {
         return valueTicket;
     }
 
-    public void setValueTicket(BigDecimal valueTicket) {
+    public void setValueTicket(Double valueTicket) {
         this.valueTicket = valueTicket;
     }
 

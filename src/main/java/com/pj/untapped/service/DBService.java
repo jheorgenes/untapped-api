@@ -18,10 +18,13 @@ import org.springframework.stereotype.Service;
 import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Permission;
+import com.pj.untapped.domain.Ticket;
 import com.pj.untapped.domain.User;
+import com.pj.untapped.domain.enuns.StatusTicket;
 import com.pj.untapped.repositories.AddressRepository;
 import com.pj.untapped.repositories.EventRepository;
 import com.pj.untapped.repositories.PermissionRepository;
+import com.pj.untapped.repositories.TicketRepository;
 import com.pj.untapped.repositories.UserRepository;
 
 @Service
@@ -39,6 +42,9 @@ public class DBService { //Classe para instanciar objetos no banco
 	
 	@Autowired
 	private EventRepository eventRepository;
+	
+	@Autowired
+    private TicketRepository ticketRepository;
 
 	@Transactional
 	public void instanciaDB() {
@@ -72,6 +78,19 @@ public class DBService { //Classe para instanciar objetos no banco
         user1.setCredentialsNonExpired(true);
         user1.setEnabled(true);
         user1.setPermissions(Arrays.asList(per1, per2));
+        
+        Ticket tkt1 = new Ticket();
+        tkt1.setDescription("Lounge");
+        tkt1.setValueTicket(144.5);
+        tkt1.setTicketClassification("Teste");
+        tkt1.setExpirationDate(LocalDateTime.now());
+        tkt1.setNumberOfTicketsPerRating(100);
+        tkt1.setStatusTicket(StatusTicket.DISPONIVEL);
+        tkt1.setEvent(ev6);
+        
+        ev6.setTickets(Arrays.asList(tkt1));
+        
+        
 		//Adiciona os relacionamentos
 		ad2.setEvent(ev1);
 		ad1.setUser(user1);
@@ -79,6 +98,7 @@ public class DBService { //Classe para instanciar objetos no banco
         permissionRepository.saveAll(Arrays.asList(per1, per2));
 		userRepository.saveAll(Arrays.asList(user1));
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));
+		ticketRepository.saveAll(Arrays.asList(tkt1));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2, ev3, ev4, ev5, ev6));
 	}
 
