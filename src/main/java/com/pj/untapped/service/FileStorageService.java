@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -35,8 +36,11 @@ public class FileStorageService {
 	}
 
 	public String storeFile(MultipartFile file) {
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		
+	    Random random = new Random();
+	    int randomNumber = (random.nextInt(10000000) + 1);
+	    String fileName = StringUtils.cleanPath(randomNumber + file.getOriginalFilename());
+//		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+	    
 		try {
 			if(fileName.contains("..")) {
 				throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);

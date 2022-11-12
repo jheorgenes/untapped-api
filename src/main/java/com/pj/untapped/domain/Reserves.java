@@ -46,8 +46,10 @@ public class Reserves implements Serializable {
     @NotNull(message = "Total value is required")
     private Double totalValue;
     
-    private String paymentId;
+    @OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL)
+    private List<Payment> payment;
     
     @OneToMany(mappedBy = "reserve", cascade = CascadeType.ALL)
     private List<ReservedTickets> reservedTickets;
+    
 }

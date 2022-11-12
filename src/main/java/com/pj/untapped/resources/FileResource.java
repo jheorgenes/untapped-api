@@ -28,47 +28,47 @@ import com.pj.untapped.service.FileStorageService;
 @RestController
 @RequestMapping("/api/file/v1")
 public class FileResource {
-	
-	private static final Logger logger = LoggerFactory.getLogger(FileResource.class);
-	
-	@Autowired
-	private FileStorageService fileStorageService;
-	
-	@PostMapping("/uploadFile")
-	public UploadFileResponseDTO uploadFile(@RequestParam("file") MultipartFile file) {
-		String fileName = fileStorageService.storeFile(file);
-		
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-									.path("/api/file/v1/downloadFile/")
-									.path(fileName)
-									.toUriString();
-		
-		return new UploadFileResponseDTO(fileName, fileDownloadUri, file.getContentType(), file.getSize());
-	}
-	
-	@PostMapping("/uploadMultipleFiles")
-	public List<UploadFileResponseDTO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-		return Arrays.asList(files).stream().map(file -> uploadFile(file)).collect(Collectors.toList());
-	}
-	
-	@GetMapping("/downloadFile/{fileName:.+}")
-	public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
-		Resource resource = fileStorageService.loadFileAsResource(fileName);
-		String contentType = null;
-		
-		try {
-			contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-		} catch (Exception e) {
-			logger.info("Cold not determine file type!");
-		}
-		
-		if(contentType == null) {
-			contentType = "application/octet-stream";
-		}
-		
-		return ResponseEntity.ok()
-					.contentType(MediaType.parseMediaType(contentType))
-					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-					.body(resource);
-	}	
+
+    private static final Logger logger = LoggerFactory.getLogger(FileResource.class);
+
+    @Autowired
+    private FileStorageService fileStorageService;
+
+    @PostMapping("/uploadFile")
+    public UploadFileResponseDTO uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/file/v1/downloadFile/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponseDTO(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+    }
+
+    @PostMapping("/uploadMultipleFiles")
+    public List<UploadFileResponseDTO> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
+        return Arrays.asList(files).stream().map(file -> uploadFile(file)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/downloadFile/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
+        Resource resource = fileStorageService.loadFileAsResource(fileName);
+        String contentType = null;
+
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (Exception e) {
+            logger.info("Cold not determine file type!");
+        }
+
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
 }
