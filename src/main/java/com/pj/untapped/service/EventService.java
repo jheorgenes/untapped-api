@@ -13,9 +13,9 @@ import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Ticket;
 import com.pj.untapped.dtos.EventDTO;
-import com.pj.untapped.dtos.TicketDTO;
 import com.pj.untapped.repositories.AddressRepository;
 import com.pj.untapped.repositories.EventRepository;
+import com.pj.untapped.repositories.TicketRepository;
 import com.pj.untapped.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -28,7 +28,7 @@ public class EventService {
 	private AddressRepository addressRepository;
 	
 	@Autowired
-	private TicketService ticketService;
+	private TicketRepository ticketRepository;
 
 	public Event findById(Integer id) {
 		Optional<Event> obj = eventRepository.findById(id);
@@ -63,15 +63,25 @@ public class EventService {
 	    );	    
 	    newEvent.setAddress(address);
 	    
+	    Event eventSave = eventRepository.save(newEvent);
+	    
 	    // Criando os tickets conforme demanda 
 	    List<Ticket> tickets = new ArrayList<>();
 	    for (Ticket ticket : objDTO.getTickets()) {
-	        TicketDTO newticket = new TicketDTO(ticket);
-	        tickets.add(ticketService.create(newticket));
+	        tickets.add(
+	            ticketRepository.save(new Ticket(
+	                null, 
+	                ticket.getDescription(), 
+	                ticket.getValueTicket(), 
+	                ticket.getTicketClassification(), 
+	                ticket.getExpirationDate(), 
+	                ticket.getNumberOfTicketsPerRating(), 
+	                ticket.getStatusTicket(),
+	                eventSave)
+	            )
+	        );
         }
-	    newEvent.setTickets(tickets);
-	    
-	    return eventRepository.save(newEvent);
+	    return eventSave;
 	}
 
 	public Event update(Integer id, @Valid EventDTO objDTO) {

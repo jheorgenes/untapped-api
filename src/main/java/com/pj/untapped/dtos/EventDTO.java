@@ -68,5 +68,6 @@ public class EventDTO {
 		this.capacity = obj.getCapacity();
 		this.address = obj.getAddress();
 		this.description = obj.getDescription();
+		this.tickets = obj.getTickets();
 	}
 }

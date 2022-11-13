@@ -62,7 +62,8 @@ public class Ticket implements Serializable {
             @NotEmpty(message = "TicketClassification is required") String ticketClassification,
             LocalDateTime expirationDate,
             @NotNull(message = "Number of tickets per Rating is required") Integer numberOfTicketsPerRating,
-            StatusTicket status) {
+            StatusTicket status,
+            Event event) {
         this.id = id;
         this.description = description;
         this.valueTicket = valueTicket;
@@ -70,6 +71,7 @@ public class Ticket implements Serializable {
         this.expirationDate = expirationDate;
         this.numberOfTicketsPerRating = numberOfTicketsPerRating;
         this.statusTicket = (status == null) ? 0 : status.getCod();
+        this.event = event;
     }
 
     public Integer getId() {
