@@ -34,6 +34,10 @@ public class EventService {
 		Optional<Event> obj = eventRepository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + ", Tipo: " + Event.class.getName()));
 	}
+	
+//	public List<Event> searchByTitle(String title){
+//	    return eventRepository.findByTitleContaining(title);
+//	}
 
 	public List<Event> findAll() {
 		return eventRepository.findAll();
@@ -106,8 +110,8 @@ public class EventService {
 		}
 		
 		if(!objDTO.getTickets().isEmpty()) {
-		    objDTO.getTickets();
-//		    oldObj.setTickets(objDTO.getTickets());
+//		    objDTO.getTickets();
+		    oldObj.setTickets(objDTO.getTickets());
 		}
 	}
 }

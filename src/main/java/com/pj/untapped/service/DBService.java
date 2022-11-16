@@ -17,14 +17,18 @@ import org.springframework.stereotype.Service;
 
 import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Event;
+import com.pj.untapped.domain.Order;
 import com.pj.untapped.domain.Permission;
 import com.pj.untapped.domain.Ticket;
+import com.pj.untapped.domain.TicketsOrder;
 import com.pj.untapped.domain.User;
 import com.pj.untapped.domain.enuns.StatusTicket;
 import com.pj.untapped.repositories.AddressRepository;
 import com.pj.untapped.repositories.EventRepository;
+import com.pj.untapped.repositories.OrderRepository;
 import com.pj.untapped.repositories.PermissionRepository;
 import com.pj.untapped.repositories.TicketRepository;
+import com.pj.untapped.repositories.TicketsOrderRepository;
 import com.pj.untapped.repositories.UserRepository;
 
 @Service
@@ -45,6 +49,12 @@ public class DBService { //Classe para instanciar objetos no banco
 	
 	@Autowired
     private TicketRepository ticketRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
+	@Autowired
+	private TicketsOrderRepository ticketsOrderRepository;
 
 	@Transactional
 	public void instanciaDB() {
@@ -87,6 +97,22 @@ public class DBService { //Classe para instanciar objetos no banco
         tkt1.setNumberOfTicketsPerRating(100);
         tkt1.setStatusTicket(StatusTicket.DISPONIVEL);
         tkt1.setEvent(ev6);
+        
+        Order order = new Order();
+        order.setId(null);
+        order.setDate(LocalDateTime.now());
+        order.setUser(user1);
+        order.setEvent(ev6);
+        order.setTotalValue(200.0);
+        orderRepository.saveAll(Arrays.asList(order));
+        
+        TicketsOrder ticketsOrder = new TicketsOrder();
+        ticketsOrder.setId(null);
+        ticketsOrder.setPrice(100.0);
+        ticketsOrder.setQuantity(2);
+        ticketsOrder.setTicket(tkt1);
+        ticketsOrder.setOrder(order);
+        ticketsOrderRepository.saveAll(Arrays.asList(ticketsOrder));
         
         ev6.setTickets(Arrays.asList(tkt1));
         

@@ -43,6 +43,12 @@ public class EventResource {
 		return ResponseEntity.ok().body(eventList);
 	}
 	
+//	@GetMapping("/search")
+//	public ResponseEntity<List<EventDTO>> searchByTitle(@RequestBody String title){
+//	    List<EventDTO> eventList = eventService.searchByTitle(title).stream().map(obj -> new EventDTO(obj)).collect(Collectors.toList());
+//	    return ResponseEntity.ok().body(eventList);
+//	}
+	
 	@PostMapping
 	public ResponseEntity<EventDTO> create(@Valid @RequestBody EventDTO objDTO){
 		Event newObj = eventService.create(objDTO);

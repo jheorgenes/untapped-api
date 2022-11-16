@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pj.untapped.domain.Address;
+import com.pj.untapped.domain.Permission;
 import com.pj.untapped.domain.User;
 
 public class UserDTO implements Serializable {
@@ -64,6 +65,8 @@ public class UserDTO implements Serializable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> adresses = new ArrayList<>();
+    
+    private List<Permission> permissions;
 
     public UserDTO() {
         super();
@@ -206,5 +209,13 @@ public class UserDTO implements Serializable {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+    
+    public List<Permission> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<Permission> permissions) {
+        this.permissions = permissions;
     }
 }

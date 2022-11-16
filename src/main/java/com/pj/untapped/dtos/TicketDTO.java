@@ -37,7 +37,7 @@ public class TicketDTO {
     private Integer statusTicket;
     
     private Integer eventId;
-
+    
     public TicketDTO(Ticket obj) {
         this.id = obj.getId();
         this.description = obj.getDescription();

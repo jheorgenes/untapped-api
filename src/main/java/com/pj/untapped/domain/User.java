@@ -92,9 +92,6 @@ public class User implements UserDetails, Serializable {
 
     private String avatar;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // Permite excluir todos os endereços vinculados
-    private List<Address> adresses = new ArrayList<>();
-
     @CPF
     private String cpf;
 
@@ -106,6 +103,12 @@ public class User implements UserDetails, Serializable {
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime updatedAt;
+    
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // Permite excluir todos os endereços vinculados
+    private List<Address> adresses = new ArrayList<>();
+    
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private List<Order> order = new ArrayList<>();
 
     public User(Integer id, String username, String email, String password, String fullname, String cpf, LocalDate birthDate, 
             Boolean accountNonExpired, Boolean accountNonLocked, Boolean credentialsNonExpired, Boolean enabled) {
