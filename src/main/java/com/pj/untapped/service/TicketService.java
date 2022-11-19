@@ -8,9 +8,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Ticket;
 import com.pj.untapped.domain.enuns.StatusTicket;
 import com.pj.untapped.dtos.TicketDTO;
+import com.pj.untapped.repositories.EventRepository;
 import com.pj.untapped.repositories.TicketRepository;
 import com.pj.untapped.service.exceptions.ObjectNotFoundException;
 
@@ -19,6 +21,9 @@ public class TicketService {
 
     @Autowired
     public TicketRepository ticketRepository;
+    
+    @Autowired
+    public EventRepository eventRepository;
 
     public Ticket findById(Integer id) {
         Optional<Ticket> newObj = ticketRepository.findById(id);
@@ -46,12 +51,19 @@ public class TicketService {
     }
 
     private Ticket fromDTO(Ticket newObj, TicketDTO objDTO) {
-        newObj.setId(objDTO.getId());
+       // newObj.setId(objDTO.getId());
         newObj.setDescription(objDTO.getDescription());
+        newObj.setExpirationDate(objDTO.getExpirationDate());
         newObj.setTicketClassification(objDTO.getTicketClassification());
         newObj.setValueTicket(objDTO.getValueTicket());
         newObj.setNumberOfTicketsPerRating(objDTO.getNumberOfTicketsPerRating());
         newObj.setStatusTicket(StatusTicket.toEnum(objDTO.getStatusTicket().getCod()));
+        
+        Optional<Event> event = eventRepository.findById(objDTO.getEventId());
+        if(event.isPresent()) {
+            newObj.setEvent(event.get());
+        }
+        
         return ticketRepository.save(newObj);
     }
 }

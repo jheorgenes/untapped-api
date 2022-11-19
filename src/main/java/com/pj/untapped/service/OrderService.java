@@ -35,12 +35,6 @@ public class OrderService {
     @Autowired
     private EventRepository eventRepository;
     
-//    @Autowired
-//    private UserServices userServices;
-//    
-//    @Autowired
-//    private EventService eventService;
-    
     public Order findById(Integer id) {
         Optional<Order> obj = orderRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + ", Tipo: " + Order.class.getName()));
@@ -87,20 +81,41 @@ public class OrderService {
     
     public Order update(Integer id, @Valid OrderDTO objDTO) {
         Order oldObj = findById(id);
-//        dataUpdates(objDTO, oldObj);
-        return orderRepository.save(oldObj);
+        dataUpdates(objDTO, oldObj);
+        return orderRepository.save(oldObj); //Grava a segunda mudança e já retorna a Entidade
     }
     
     public void delete(Integer id) {
         orderRepository.deleteById(id);
     }
     
-//    private void dataUpdates(OrderDTO objDTO, Order oldObj) {
-//        oldObj.setDate(objDTO.getDate());
-//        oldObj.setUser(objDTO.getUser());
-//        oldObj.setPayments(objDTO.getPayments());
-//        oldObj.setTotalValue(objDTO.getTotalValue());
-//        oldObj.setEvent(objDTO.getEvent());
-//        oldObj.setTickets(objDTO.getTickets());
-//    }
+    private void dataUpdates(OrderDTO objDTO, Order oldObj) { 
+        oldObj.setDate(objDTO.getDate());
+        
+        Optional<User> user = userRepository.findById(objDTO.getUserId());
+        if(user.isPresent()) {
+            oldObj.setUser(user.get());
+        }
+        
+        Optional<Event> event = eventRepository.findById(objDTO.getEventId());
+        if(event.isPresent()) {
+            oldObj.setEvent(event.get());
+        }
+        
+        Order orderSave = orderRepository.save(oldObj); //Grava a primeira mudança
+        Double priceTotal = 0.0;
+        List<TicketsOrder> tickets = new ArrayList<>();
+        for (TicketsOrder ticketOrder : objDTO.getTicketsOrder()) {
+            TicketsOrder newTicketOrder = new TicketsOrder();
+            newTicketOrder.setId(null);
+            newTicketOrder.setPrice(ticketOrder.getPrice());
+            newTicketOrder.setQuantity(ticketOrder.getQuantity());
+            newTicketOrder.setOrder(orderSave);
+            newTicketOrder.setTicket(ticketOrder.getTicket());
+            priceTotal += (newTicketOrder.getPrice() * newTicketOrder.getQuantity());
+            tickets.add(ticketsOrderRepository.save(newTicketOrder));
+        }
+        orderSave.setTotalValue(priceTotal);
+        orderSave.setTicketsOrder(tickets);
+    }
 }

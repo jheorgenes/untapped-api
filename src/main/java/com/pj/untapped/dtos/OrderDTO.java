@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pj.untapped.domain.Order;
 import com.pj.untapped.domain.Payment;
 import com.pj.untapped.domain.TicketsOrder;
+import com.pj.untapped.domain.enuns.StatusPayment;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,8 @@ public class OrderDTO implements Serializable {
     private Integer userId;
     private Integer eventId;
     private Double totalValue;
+    
+    private StatusPayment statusPayment;
     
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<Payment> payments;
