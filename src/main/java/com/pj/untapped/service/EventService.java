@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,10 @@ public class EventService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! ID: " + id + ", Tipo: " + Event.class.getName()));
 	}
 	
-//	public List<Event> searchByTitle(String title){
-//	    return eventRepository.findByTitleContaining(title);
-//	}
+	@Transactional
+	public List<Event> searchByTitle(String title){
+	    return eventRepository.findByTitleWith(title);
+	}
 
 	public List<Event> findAll() {
 		return eventRepository.findAll();

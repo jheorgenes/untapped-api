@@ -2,6 +2,7 @@ package com.pj.untapped.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -9,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
@@ -55,6 +59,20 @@ public class Event implements Serializable {
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
+    
+    @ManyToMany
+    @JoinTable(name = "events_category", 
+        joinColumns = { @JoinColumn(name = "category_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "event_id") })
+    private List<Categories> categories;
+    
+    public List<String> getDescriptionCategorys() {
+        List<String> categorys = new ArrayList<>();
+        for (Categories category : this.categories) {
+            categorys.add(category.getCategory().getDescription());
+        }
+        return categorys;
+    }
 
     public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline,
             String frontCover, Integer capacity, Address address, String description) {

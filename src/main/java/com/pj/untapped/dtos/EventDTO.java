@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -11,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pj.untapped.domain.Address;
+import com.pj.untapped.domain.Categories;
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Ticket;
 
@@ -56,6 +60,12 @@ public class EventDTO {
 	
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
 	private List<Ticket> tickets;
+	
+	@ManyToMany
+    @JoinTable(name = "events_category", 
+        joinColumns = { @JoinColumn(name = "category_id") }, 
+        inverseJoinColumns = { @JoinColumn(name = "event_id") })
+	private List<Categories> categories;
 
 	public EventDTO(Event obj) {
 		super();
