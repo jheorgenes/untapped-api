@@ -29,12 +29,15 @@ public class TicketsOrderDTO implements Serializable {
     @NotNull(message = "Quantity is required")
     private Integer quantity;
     
+    private String qrCode;
+    
     public TicketsOrderDTO(TicketsOrder obj) {
         this.id = obj.getId();
         this.order = obj.getOrder();
         this.ticket = obj.getTicket();
         this.price = obj.getPrice();
         this.quantity = obj.getQuantity();
+        this.qrCode = obj.getQrCode();
     }
     
     public TicketsOrderDTO(Integer id, Double price, Integer quantity) {

@@ -6,6 +6,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -110,6 +111,7 @@ public class DBService { //Classe para instanciar objetos no banco
         ticketsOrder.setId(null);
         ticketsOrder.setPrice(100.0);
         ticketsOrder.setQuantity(2);
+        ticketsOrder.setQrCode(gerarDigitosAleatorios(12));
         ticketsOrder.setTicket(tkt1);
         ticketsOrder.setOrder(order);
         ticketsOrderRepository.saveAll(Arrays.asList(ticketsOrder));
@@ -134,5 +136,14 @@ public class DBService { //Classe para instanciar objetos no banco
 	    DelegatingPasswordEncoder passwordEncoder = new DelegatingPasswordEncoder("pbkdf2", encoders);
 	    passwordEncoder.setDefaultPasswordEncoderForMatches(new Pbkdf2PasswordEncoder());
 	    return passwordEncoder.encode(password);
+    }
+    
+    private static String gerarDigitosAleatorios(int digitos) {
+        StringBuilder text = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < digitos; i++) {
+            text.append(random.nextInt(10)); // gerar um número aleatório entre 0 e 9
+        }
+        return text.toString();
     }
 }

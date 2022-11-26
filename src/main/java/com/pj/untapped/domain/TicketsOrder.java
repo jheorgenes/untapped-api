@@ -44,6 +44,8 @@ public class TicketsOrder implements Serializable {
     @NotNull(message = "quantity is required")
     private Integer quantity;
     
+    private String qrCode;
+    
     public TicketsOrder(Integer id, Double price, Integer quantity) {
         this.id = id;
         this.price = price;

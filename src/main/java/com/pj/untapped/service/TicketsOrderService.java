@@ -2,6 +2,7 @@ package com.pj.untapped.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -54,6 +55,10 @@ public class TicketsOrderService {
         if(order.isPresent()) {
             newObj.setOrder(order.get());
         }
+        
+        String generatedQrCode = gerarDigitosAleatorios(12);
+        newObj.setQrCode(generatedQrCode);
+        
         return ticketsOrderRepository.save(newObj);
     }
 
@@ -81,5 +86,14 @@ public class TicketsOrderService {
         
         newObj.setPrice(objDTO.getPrice());
         newObj.setQuantity(objDTO.getQuantity());
+    }
+
+    private static String gerarDigitosAleatorios(int digitos) {
+        StringBuilder text = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < digitos; i++) {
+            text.append(random.nextInt(10)); // gerar um número aleatório entre 0 e 9
+        }
+        return text.toString();
     }
 }
