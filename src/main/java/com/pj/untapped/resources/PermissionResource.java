@@ -25,7 +25,7 @@ import com.pj.untapped.service.PermissionService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value = "/api/permission")
+@RequestMapping(value = "/api/permissions")
 public class PermissionResource {
 
     @Autowired

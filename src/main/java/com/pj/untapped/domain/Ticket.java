@@ -13,7 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pj.untapped.domain.enuns.StatusTicket;
 
 import lombok.EqualsAndHashCode;
@@ -50,7 +50,7 @@ public class Ticket implements Serializable {
     
     private Integer statusTicket;
     
-    @JsonIgnore
+    @JsonIgnoreProperties({ "subTitle", "photos", "media", "frontCover", "capacity", "description", "tickets", "categories", "descriptionCategorys" })
     @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;

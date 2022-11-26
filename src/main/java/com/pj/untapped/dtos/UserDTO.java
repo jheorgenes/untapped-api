@@ -66,6 +66,7 @@ public class UserDTO implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> adresses = new ArrayList<>();
     
+    private Integer permissionID;
     private List<Permission> permissions;
 
     public UserDTO() {
@@ -89,6 +90,7 @@ public class UserDTO implements Serializable {
         this.accountNonLocked = obj.getAccountNonLocked();
         this.credentialsNonExpired = obj.getCredentialsNonExpired();
         this.enabled = obj.getEnabled();
+        this.permissions = obj.getPermissions();
     }
 
     public Integer getId() {
@@ -211,6 +213,14 @@ public class UserDTO implements Serializable {
         this.enabled = enabled;
     }
     
+    public Integer getPermissionID() {
+        return permissionID;
+    }
+
+    public void setPermissionID(Integer permissionID) {
+        this.permissionID = permissionID;
+    }
+
     public List<Permission> getPermissions() {
         return permissions;
     }
