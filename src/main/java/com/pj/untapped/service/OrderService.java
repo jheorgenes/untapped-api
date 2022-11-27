@@ -3,6 +3,7 @@ package com.pj.untapped.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.validation.Valid;
 
@@ -71,6 +72,7 @@ public class OrderService {
             newTicketOrder.setOrder(orderSave);
             newTicketOrder.setTicket(ticketOrder.getTicket());
             priceTotal += (newTicketOrder.getPrice() * newTicketOrder.getQuantity());
+            newTicketOrder.setQrCode(gerarDigitosAleatorios(12));
             tickets.add(ticketsOrderRepository.save(newTicketOrder));
         }
         orderSave.setTotalValue(priceTotal);
@@ -117,5 +119,14 @@ public class OrderService {
         }
         orderSave.setTotalValue(priceTotal);
         orderSave.setTicketsOrder(tickets);
+    }
+    
+    private static String gerarDigitosAleatorios(int digitos) {
+        StringBuilder text = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < digitos; i++) {
+            text.append(random.nextInt(10)); // gerar um número aleatório entre 0 e 9
+        }
+        return text.toString();
     }
 }
