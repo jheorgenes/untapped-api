@@ -42,6 +42,12 @@ public class TicketsOrderResource {
         List<TicketsOrderDTO> ticketList = ticketsOrderService.findAll().stream().map(obj -> new TicketsOrderDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(ticketList);
     }
+    
+    @PostMapping("/validate/{qrcode:.+}")
+    public ResponseEntity<TicketsOrderDTO> validadeByQrCode(@PathVariable String qrcode){
+        TicketsOrderDTO objDTO = new TicketsOrderDTO(ticketsOrderService.findByQrCode(qrcode));
+        return ResponseEntity.ok().body(objDTO);
+    }
 
     @PostMapping
     public ResponseEntity<TicketsOrderDTO> create(@Valid @RequestBody TicketsOrderDTO objDTO) {

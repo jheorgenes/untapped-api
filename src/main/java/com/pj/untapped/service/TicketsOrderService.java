@@ -38,6 +38,25 @@ public class TicketsOrderService {
     public List<TicketsOrder> findAll() {
         return ticketsOrderRepository.findAll();
     }
+    
+    public TicketsOrder findByQrCode(String qrcode) {
+        TicketsOrder newObj = new TicketsOrder();
+        Optional<TicketsOrder> newOptional = Optional.ofNullable(ticketsOrderRepository.findByQrCode(qrcode));
+        if(newOptional.isPresent()) {
+            newObj = newOptional.get();
+            if(newObj.getQuantity() != null && newObj.getQuantity() > 0) {
+                if(newObj.getValidateTicket() < newObj.getQuantity()) {
+                    newObj.setValidateTicket(newObj.getValidateTicket() + 1);
+                    ticketsOrderRepository.save(newObj);
+                } else {
+                    throw new ObjectNotFoundException("Acabaram as entradas para o QRCODE: " + qrcode + ", Tipo: " + TicketsOrder.class.getName());
+                }
+            }
+            return newObj;
+        } else {
+            throw new ObjectNotFoundException("Objeto não encontrado! QRCODE: " + qrcode + ", Tipo: " + TicketsOrder.class.getName());
+        }
+    }
 
     public TicketsOrder create(@Valid TicketsOrderDTO objDTO) {
         TicketsOrder newObj = new TicketsOrder(

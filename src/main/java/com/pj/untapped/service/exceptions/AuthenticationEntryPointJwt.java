@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@Deprecated //Depreciação manual
 @Component
 public class AuthenticationEntryPointJwt implements AuthenticationEntryPoint {
     @Override

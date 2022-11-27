@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Deprecated //Depreciação manual
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     
     @Override

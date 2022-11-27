@@ -30,6 +30,7 @@ public class TicketsOrderDTO implements Serializable {
     private Integer quantity;
     
     private String qrCode;
+    private Integer validateTicket = 0;
     
     public TicketsOrderDTO(TicketsOrder obj) {
         this.id = obj.getId();
@@ -38,6 +39,7 @@ public class TicketsOrderDTO implements Serializable {
         this.price = obj.getPrice();
         this.quantity = obj.getQuantity();
         this.qrCode = obj.getQrCode();
+        this.validateTicket = obj.getValidateTicket();
     }
     
     public TicketsOrderDTO(Integer id, Double price, Integer quantity) {

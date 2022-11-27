@@ -45,6 +45,7 @@ public class TicketsOrder implements Serializable {
     private Integer quantity;
     
     private String qrCode;
+    private Integer validateTicket = 0;
     
     public TicketsOrder(Integer id, Double price, Integer quantity) {
         this.id = id;
