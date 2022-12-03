@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.pj.untapped.service.exceptions.InvalidJwtAuthenticationException;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InvalidJwtAuthenticationException.class) 
