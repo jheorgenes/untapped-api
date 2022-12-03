@@ -46,9 +46,10 @@ public class UserResource {
     @PostMapping
     public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO objDTO){
         User newObj = userServices.create(objDTO);
+        UserDTO newDTO = new UserDTO(newObj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                                              .buildAndExpand(newObj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(newDTO);
     }
     
     @PutMapping(value = "/{id}")
