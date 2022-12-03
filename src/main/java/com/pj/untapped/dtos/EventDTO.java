@@ -79,5 +79,6 @@ public class EventDTO {
 		this.address = obj.getAddress();
 		this.description = obj.getDescription();
 		this.tickets = obj.getTickets();
+		this.categories = obj.getCategories();
 	}
 }

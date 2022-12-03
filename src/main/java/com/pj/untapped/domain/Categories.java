@@ -1,7 +1,6 @@
 package com.pj.untapped.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,9 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
-import com.pj.untapped.domain.enuns.Category;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,23 +24,17 @@ public class Categories implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @NotNull(message = "Category cannot be null")
-    @NotEmpty(message = "Category is required")
-    private Integer category;
-    
-    private LocalDate createdAt;
+    @NotEmpty(message = "Description category is required")
+    private String description;
     
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    //@JsonIgnoreProperties({ "photos", "media", "description", "categories", "tickets", "address" })
     private List<Event> events;
     
-    public Categories(Integer id,
-            @NotNull(message = "Category cannot be null") 
-            @NotEmpty(message = "Category is required") Category category,
-            List<Event> events) {
+    public Categories(Integer id, @NotEmpty(message = "Description category is required") String description) {
         this.id = id;
-        this.category = (category == null) ? 0 : category.getCod();;
-        this.events = events;
+        this.description = description;
     } 
 
     public Integer getId() {
@@ -52,13 +44,13 @@ public class Categories implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    public Category getCategory() {
-        return Category.toEnum(this.category);
+    
+    public String getDescription() {
+        return description;
     }
 
-    public void setCategory(Category category) {
-        this.category = category.getCod();
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<Event> getEvents() {

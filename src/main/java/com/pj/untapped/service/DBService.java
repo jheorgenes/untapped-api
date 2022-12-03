@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pj.untapped.domain.Address;
+import com.pj.untapped.domain.Categories;
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Order;
 import com.pj.untapped.domain.Permission;
@@ -25,6 +26,7 @@ import com.pj.untapped.domain.TicketsOrder;
 import com.pj.untapped.domain.User;
 import com.pj.untapped.domain.enuns.StatusTicket;
 import com.pj.untapped.repositories.AddressRepository;
+import com.pj.untapped.repositories.CategoriesRepository;
 import com.pj.untapped.repositories.EventRepository;
 import com.pj.untapped.repositories.OrderRepository;
 import com.pj.untapped.repositories.PermissionRepository;
@@ -56,12 +58,32 @@ public class DBService { //Classe para instanciar objetos no banco
 	
 	@Autowired
 	private TicketsOrderRepository ticketsOrderRepository;
+	
+	@Autowired
+	private CategoriesRepository categoriesRepository;
 
 	@Transactional
 	public void instanciaDB() {
 	    /*Criando endereços*/
 		Address ad1 = new Address(null,"Onze", "RUA GV10", "Goiânia Viva", "74000-000", "Goiânia", "Goiás", "Brasil");
 		Address ad2 = new Address(null,"Mercado Central", "Avenida T-4", "Setor Bueno", "74000-000", "Goiânia", "Goiás", "Brasil");
+		/*Criando Categorias de Eventos*/
+		Categories ct1 = new Categories(null, "SERTANEJO");
+		Categories ct2 = new Categories(null, "PAGODE");
+		Categories ct3 = new Categories(null, "ROCK");
+		Categories ct4 = new Categories(null, "SAMBA");
+		Categories ct5 = new Categories(null, "RAP");
+		Categories ct6 = new Categories(null, "FUNK");
+		Categories ct7 = new Categories(null, "HIPHOP");
+		Categories ct8 = new Categories(null, "MPB");
+		Categories ct9 = new Categories(null, "POP");
+		Categories ct10 = new Categories(null, "ELETRONICA");
+		Categories ct11 = new Categories(null, "GOSPEL");
+		Categories ct12 = new Categories(null, "STANDUP");
+		Categories ct13 = new Categories(null, "CINEMA");
+		Categories ct14 = new Categories(null, "TEATRO");
+		
+		
 		/*Criando Eventos*/
 		Event ev1 = new Event(null, "Cabaré 50 anos", "Uma festa promovida por Eduardo Costa", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O CABARÉ é um lugar onde além de um espetáculo, você também presencia os gigantes do sertanejo contando: histórias, tirando sarro uns dos outros e cantam as mais pedidas em churrascos, karaokês e até mesmo bares de petisco.");
 		Event ev2 = new Event(null, "Hugo e Guilherme", "NOPELO 360", LocalDateTime.now(), LocalDateTime.now().plusHours(5), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
@@ -74,6 +96,8 @@ public class DBService { //Classe para instanciar objetos no banco
         per1.setDescription("ADMIN");
         Permission per2 = new Permission();
         per2.setDescription("MANAGER");
+        Permission per3 = new Permission();
+        per3.setDescription("USER");
         /*Criptografando senha*/
         String senhaUser1 = encriptPassword("admin234");
 		/*Criando um usuário*/
@@ -118,12 +142,12 @@ public class DBService { //Classe para instanciar objetos no banco
         
         ev6.setTickets(Arrays.asList(tkt1));
         
-        
 		//Adiciona os relacionamentos
 		ad2.setEvent(ev1);
 		ad1.setUser(user1);
 		//Salva no banco de dados
-        permissionRepository.saveAll(Arrays.asList(per1, per2));
+		categoriesRepository.saveAll(Arrays.asList(ct1, ct2, ct3, ct4, ct5, ct6, ct7, ct8, ct9, ct10, ct11, ct12, ct13, ct14 ));
+        permissionRepository.saveAll(Arrays.asList(per1, per2, per3));
 		userRepository.saveAll(Arrays.asList(user1));
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));
 		ticketRepository.saveAll(Arrays.asList(tkt1));

@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pj.untapped.domain.Address;
+import com.pj.untapped.domain.Categories;
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Ticket;
 import com.pj.untapped.dtos.EventDTO;
 import com.pj.untapped.repositories.AddressRepository;
+import com.pj.untapped.repositories.CategoriesRepository;
 import com.pj.untapped.repositories.EventRepository;
 import com.pj.untapped.repositories.TicketRepository;
 import com.pj.untapped.service.exceptions.ObjectNotFoundException;
@@ -31,8 +33,8 @@ public class EventService {
 	@Autowired
 	private TicketRepository ticketRepository;
 	
-//	@Autowired
-//	private CategoriesRepository categoriesRepository;
+	@Autowired
+	private CategoriesRepository categoriesRepository;
 
 	public Event findById(Integer id) {
 		Optional<Event> obj = eventRepository.findById(id);
@@ -71,6 +73,16 @@ public class EventService {
 	         objDTO.getAddress().getContry())
 	    );	    
 	    newEvent.setAddress(address);
+	    
+	    List<Categories> categoriesList = new ArrayList<>();
+	    for (Categories category : objDTO.getCategories()) {
+	        Optional<Categories> categoryFound = categoriesRepository.findById(category.getId());
+	        if(categoryFound.isPresent()) {
+	            categoriesList.add(categoryFound.get());
+	        }
+	    }
+	    newEvent.setCategories(categoriesList);
+	    
 	    Event eventSave = eventRepository.save(newEvent);
 	    // Criando os tickets conforme demanda 
 	    List<Ticket> tickets = new ArrayList<>();
@@ -113,7 +125,6 @@ public class EventService {
 		}
 		
 		if(!objDTO.getTickets().isEmpty()) {
-//		    objDTO.getTickets();
 		    oldObj.setTickets(objDTO.getTickets());
 		}
 	}

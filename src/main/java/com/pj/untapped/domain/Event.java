@@ -2,7 +2,6 @@ package com.pj.untapped.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.EqualsAndHashCode;
@@ -64,15 +64,8 @@ public class Event implements Serializable {
     @JoinTable(name = "events_category", 
         joinColumns = { @JoinColumn(name = "category_id") }, 
         inverseJoinColumns = { @JoinColumn(name = "event_id") })
+    @JsonBackReference
     private List<Categories> categories;
-    
-    public List<String> getDescriptionCategorys() {
-        List<String> categorys = new ArrayList<>();
-        for (Categories category : this.categories) {
-            categorys.add(category.getCategory().getDescription());
-        }
-        return categorys;
-    }
 
     public Event(Integer id, String title, String subTitle, LocalDateTime dateEntry, LocalDateTime deadline,
             String frontCover, Integer capacity, Address address, String description) {
