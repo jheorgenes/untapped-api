@@ -1,6 +1,7 @@
 package com.pj.untapped.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,10 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pj.untapped.domain.Permission;
 import com.pj.untapped.domain.User;
 import com.pj.untapped.dtos.UserDTO;
+import com.pj.untapped.repositories.PermissionRepository;
 import com.pj.untapped.repositories.UserRepository;
 import com.pj.untapped.service.exceptions.ObjectNotFoundException;
 
@@ -28,6 +31,9 @@ public class UserServices implements UserDetailsService {
 
     @Autowired
     UserRepository repository;
+    
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     public UserServices(UserRepository repository) {
         this.repository = repository;
@@ -70,6 +76,15 @@ public class UserServices implements UserDetailsService {
         );
         newUser.setAdresses(objDTO.getAdresses()); //Insere o endereço que tiver.
         newUser.setAvatar(objDTO.getAvatar());
+        
+        List<Permission> permissionList = new ArrayList<>();
+        for (Permission permission : objDTO.getPermissions()) {
+            Optional<Permission> permissionVinculada = permissionRepository.findById(permission.getId());
+            if(permissionVinculada.isPresent()) {
+                permissionList.add(permissionVinculada.get());
+            }
+        }
+        newUser.setPermissions(permissionList); 
         return repository.save(newUser);
     }
 

@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -66,7 +67,7 @@ public class UserDTO implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Address> adresses = new ArrayList<>();
     
-    private Integer permissionID;
+    @ManyToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Permission> permissions;
 
     public UserDTO() {
@@ -211,14 +212,6 @@ public class UserDTO implements Serializable {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
-    }
-    
-    public Integer getPermissionID() {
-        return permissionID;
-    }
-
-    public void setPermissionID(Integer permissionID) {
-        this.permissionID = permissionID;
     }
 
     public List<Permission> getPermissions() {

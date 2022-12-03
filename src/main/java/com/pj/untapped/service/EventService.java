@@ -30,6 +30,9 @@ public class EventService {
 	
 	@Autowired
 	private TicketRepository ticketRepository;
+	
+//	@Autowired
+//	private CategoriesRepository categoriesRepository;
 
 	public Event findById(Integer id) {
 		Optional<Event> obj = eventRepository.findById(id);
@@ -68,9 +71,7 @@ public class EventService {
 	         objDTO.getAddress().getContry())
 	    );	    
 	    newEvent.setAddress(address);
-	    
 	    Event eventSave = eventRepository.save(newEvent);
-	    
 	    // Criando os tickets conforme demanda 
 	    List<Ticket> tickets = new ArrayList<>();
 	    for (Ticket ticket : objDTO.getTickets()) {
