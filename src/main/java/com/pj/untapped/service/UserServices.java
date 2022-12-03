@@ -19,9 +19,11 @@ import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Permission;
 import com.pj.untapped.domain.User;
 import com.pj.untapped.dtos.UserDTO;
+import com.pj.untapped.repositories.AddressRepository;
 import com.pj.untapped.repositories.PermissionRepository;
 import com.pj.untapped.repositories.UserRepository;
 import com.pj.untapped.service.exceptions.ObjectNotFoundException;
@@ -34,6 +36,9 @@ public class UserServices implements UserDetailsService {
     
     @Autowired
     private PermissionRepository permissionRepository;
+    
+    @Autowired
+    private AddressRepository addressRepository;
 
     public UserServices(UserRepository repository) {
         this.repository = repository;
@@ -119,6 +124,26 @@ public class UserServices implements UserDetailsService {
         oldObj.setAccountNonLocked(objDTO.getAccountNonLocked());
         oldObj.setCredentialsNonExpired(objDTO.getCredentialsNonExpired());
         oldObj.setEnabled(objDTO.getEnabled());
+        
+        if(objDTO.getAdresses() != null && !objDTO.getAdresses().isEmpty()) {
+            for (Address address : objDTO.getAdresses()) {
+                Address newAddress = new Address(
+                    null, 
+                    address.getTitle(),
+                    address.getStreet(),
+                    address.getDistrict(),
+                    address.getCep(),
+                    address.getCity(),
+                    address.getState(),
+                    address.getContry());
+                newAddress.setAddressNumber(address.getAddressNumber());
+                newAddress.setAddressComplement(address.getAddressComplement());
+                newAddress.setLatitude(address.getLatitude());
+                newAddress.setLongitude(address.getLongitude());
+                newAddress.setUser(oldObj);
+                addressRepository.save(newAddress);
+            }
+        }
     }
     
     private String encriptPassword(String password) {
