@@ -83,14 +83,67 @@ public class DBService { //Classe para instanciar objetos no banco
 		Categories ct13 = new Categories(null, "CINEMA");
 		Categories ct14 = new Categories(null, "TEATRO");
 		
-		
 		/*Criando Eventos*/
-		Event ev1 = new Event(null, "Cabaré 50 anos", "Uma festa promovida por Eduardo Costa", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O CABARÉ é um lugar onde além de um espetáculo, você também presencia os gigantes do sertanejo contando: histórias, tirando sarro uns dos outros e cantam as mais pedidas em churrascos, karaokês e até mesmo bares de petisco.");
-		Event ev2 = new Event(null, "Hugo e Guilherme", "NOPELO 360", LocalDateTime.now(), LocalDateTime.now().plusHours(5), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
-		Event ev3 = new Event(null, "Murilo Ruff", "Ao vivão", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
-		Event ev4 = new Event(null, "Henrique e Juliano", "Caldas Contry", LocalDateTime.now(), LocalDateTime.now().plusHours(4), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
-		Event ev5 = new Event(null, "Thiaguinho", "Tardezinha", LocalDateTime.now(), LocalDateTime.now().plusHours(5), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
-		Event ev6 = new Event(null, "3030", "Tropicaliza", LocalDateTime.now(), LocalDateTime.now().plusHours(3), "Capa Provisória", 30000, ad2, "O evento NO PELO 360 tem muita história pra contar, mas só pra quem estiver disposto a ouvir..");
+		Event ev1 = new Event(null, 
+		        "Cabaré 10 anos", 
+		        "Uma festa promovida por Leonardo e Gusttavo Lima", 
+		        LocalDateTime.now(), 
+		        LocalDateTime.now().plusHours(3), 
+		        "7236239LeonardoEGusttavoLima.jpg", 
+		        30000, 
+		        ad2, 
+		        "Grandes amigos, muita resenha. Venha prestigiar esses ícones da música Sertaneja");
+		
+		Event ev2 = new Event(null, 
+		        "Hugo e Guilherme", 
+		        "NOPELO 360", 
+		        LocalDateTime.now(), 
+		        LocalDateTime.now().plusHours(5), 
+		        "4876543HugoeGuilherme.webp", 
+		        35000, 
+		        ad2, 
+		        "Venha participar dessa festa espetacular chamada NOPELO 360 em Goiânia. Espaço para 35 Mil pessoas");
+		
+		Event ev3 = new Event(null, 
+		        "Murillo Ruff", 
+		        "Ao Vivão", 
+		        LocalDateTime.now(), 
+		        LocalDateTime.now().plusHours(3), 
+		        "9933464MurilloRuff.png", 
+		        20000, 
+		        ad2, 
+		        "Veja se você consegue escutar essa sem tomar uma!!");
+		
+		Event ev4 = new Event(null, 
+		        "Joao Gomes", 
+		        "Caldas Contry", 
+		        LocalDateTime.now(), 
+		        LocalDateTime.now().plusHours(4), 
+		        "719794JoaoGomes.jpg", 
+		        30000, 
+		        ad2, 
+		        "Não tem formigueiro mais o piseiro está na ativa");
+		
+		Event ev5 = new Event(null, 
+		        "Vitinho", 
+		        "Sonhos", 
+		        LocalDateTime.now(), 
+		        LocalDateTime.now().plusHours(5),
+		        "2013771Vitinho.png", 
+		        30000, 
+		        ad2, 
+		        "Venha realizar seus sonhos ouvindo a minha canção");
+		
+		Event ev6 = new Event(null, 
+		        "3030", 
+		        "Tropicaliza", 
+		        LocalDateTime.now(), 
+		        LocalDateTime.now().plusHours(3), 
+		        "53033133030.jpg", 
+		        30000, 
+		        ad2, 
+		        "Direto da Bahia para cantar RAP pra vocês!");
+		
 		/*Criando Permissões*/
 		Permission per1 = new Permission();
         per1.setDescription("ADMIN");
@@ -146,7 +199,7 @@ public class DBService { //Classe para instanciar objetos no banco
 		ad2.setEvent(ev1);
 		ad1.setUser(user1);
 		//Salva no banco de dados
-		categoriesRepository.saveAll(Arrays.asList(ct1, ct2, ct3, ct4, ct5, ct6, ct7, ct8, ct9, ct10, ct11, ct12, ct13, ct14 ));
+		categoriesRepository.saveAll(Arrays.asList(ct1, ct2, ct3, ct4, ct5, ct6, ct7, ct8, ct9, ct10, ct11, ct12, ct13, ct14));
         permissionRepository.saveAll(Arrays.asList(per1, per2, per3));
 		userRepository.saveAll(Arrays.asList(user1));
 		addressRepository.saveAll(Arrays.asList(ad1, ad2));

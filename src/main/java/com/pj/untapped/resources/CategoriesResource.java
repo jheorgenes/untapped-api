@@ -46,8 +46,9 @@ public class CategoriesResource {
     @PostMapping
     public ResponseEntity<CategoriesDTO> create(@Valid @RequestBody CategoriesDTO objDTO){
         Categories newObj = categoryService.create(objDTO);
+        CategoriesDTO newDTO = new CategoriesDTO(newObj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+        return ResponseEntity.created(uri).body(newDTO);
     }
     
     @PutMapping(value = "/{id}")
