@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
+import com.pj.untapped.service.exceptions.InvalidJwtAuthenticationException;
+
 public class JwtTokenFilter extends GenericFilterBean {
 
     @Autowired
@@ -23,14 +25,14 @@ public class JwtTokenFilter extends GenericFilterBean {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws InvalidJwtAuthenticationException, IOException, ServletException {
         String token = tokenProvider.resolveToken((HttpServletRequest) request); //Obtendo o token
         if (token != null && tokenProvider.validadeToken(token)) { //Valida o token
-            Authentication auth = tokenProvider.getAuthentication(token); //Obtem authenticação.
+            Authentication auth = tokenProvider.getAuthentication(token); //Obtém authenticação.
             if (auth != null) {
                 SecurityContextHolder.getContext().setAuthentication(auth); //Insere a authenticação no Spring Security
             }
-        }
+        } 
         chain.doFilter(request, response);
     }
 }

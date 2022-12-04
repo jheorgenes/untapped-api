@@ -107,8 +107,8 @@ public class JwtTokenProvider {
     }
     
     public boolean validadeToken(String token) {
-        DecodedJWT decodedJWT = decodedToken(token);
         try {
+            DecodedJWT decodedJWT = decodedToken(token);
             if(decodedJWT.getExpiresAt().before(new Date())) { //Se for antes desse momento, o token está expirado
                 return false;
             }
