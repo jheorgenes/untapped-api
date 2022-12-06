@@ -124,8 +124,31 @@ public class EventService {
 		    oldObj.setAddress(objDTO.getAddress());
 		}
 		
-		if(!objDTO.getTickets().isEmpty()) {
-		    oldObj.setTickets(objDTO.getTickets());
+		if(objDTO.getTickets() != null && !objDTO.getTickets().isEmpty()) {
+		    List<Ticket> tickets = new ArrayList<>();
+	        for (Ticket ticket : objDTO.getTickets()) {
+	            tickets.add(
+	                ticketRepository.save(new Ticket(
+	                    null, 
+	                    ticket.getDescription(), 
+	                    ticket.getValueTicket(), 
+	                    ticket.getTicketClassification(), 
+	                    ticket.getExpirationDate(), 
+	                    ticket.getNumberOfTicketsPerRating(), 
+	                    ticket.getStatusTicket(),
+	                    oldObj)
+	                )
+	            );
+	        }
 		}
+		
+		List<Categories> categoriesList = new ArrayList<>();
+        for (Categories category : objDTO.getCategories()) {
+            Optional<Categories> categoryFound = categoriesRepository.findById(category.getId());
+            if(categoryFound.isPresent()) {
+                categoriesList.add(categoryFound.get());
+            }
+        }
+        oldObj.setCategories(categoriesList);
 	}
 }

@@ -50,7 +50,7 @@ public class EventDTO {
 	
 	private String frontCover;
 	
-	@OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@Valid
 	private Address address;
 	
@@ -60,7 +60,7 @@ public class EventDTO {
 	@NotEmpty(message = "Title is required")
 	private String description;
 	
-	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ticket> tickets;
 	
 	@ManyToMany
