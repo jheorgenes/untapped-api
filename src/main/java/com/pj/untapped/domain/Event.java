@@ -54,7 +54,7 @@ public class Event implements Serializable {
     private Integer capacity;
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL) // Permite excluir todos os endereços vinculados
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true) // Permite excluir todos os endereços vinculados
     private Address address;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)

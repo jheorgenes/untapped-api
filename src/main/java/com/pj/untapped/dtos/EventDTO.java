@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -49,6 +50,7 @@ public class EventDTO {
 	
 	private String frontCover;
 	
+	@OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Valid
 	private Address address;
 	
