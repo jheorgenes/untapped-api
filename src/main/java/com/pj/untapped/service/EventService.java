@@ -14,7 +14,9 @@ import com.pj.untapped.domain.Address;
 import com.pj.untapped.domain.Categories;
 import com.pj.untapped.domain.Event;
 import com.pj.untapped.domain.Ticket;
+import com.pj.untapped.dtos.AddressDTO;
 import com.pj.untapped.dtos.EventDTO;
+import com.pj.untapped.dtos.TicketDTO;
 import com.pj.untapped.repositories.AddressRepository;
 import com.pj.untapped.repositories.CategoriesRepository;
 import com.pj.untapped.repositories.EventRepository;
@@ -31,7 +33,13 @@ public class EventService {
 	private AddressRepository addressRepository;
 	
 	@Autowired
+	private AddressService addressService;
+	
+	@Autowired
 	private TicketRepository ticketRepository;
+	
+	@Autowired
+	private TicketService ticketService;
 	
 	@Autowired
 	private CategoriesRepository categoriesRepository;
@@ -52,25 +60,25 @@ public class EventService {
 
 	public Event create(@Valid EventDTO objDTO) {
 	    Event newEvent = new Event(
-	            null, 
-	            objDTO.getTitle(), 
-	            objDTO.getSubTitle(), 
-	            objDTO.getDateEntry(), 
-	            objDTO.getDeadline(), 
-	            objDTO.getFrontCover(), 
-	            objDTO.getCapacity(), 
-	            objDTO.getDescription()
+	        null, 
+	        objDTO.getTitle(), 
+	        objDTO.getSubTitle(), 
+	        objDTO.getDateEntry(), 
+	        objDTO.getDeadline(), 
+	        objDTO.getFrontCover(), 
+	        objDTO.getCapacity(), 
+	        objDTO.getDescription()
 	    );
 	    
 	    Address address = addressRepository.save(new Address(
-	         null, 
-	         objDTO.getAddress().getTitle(),
-	         objDTO.getAddress().getStreet(), 
-	         objDTO.getAddress().getDistrict(), 
-	         objDTO.getAddress().getCep(), 
-	         objDTO.getAddress().getCity(), 
-	         objDTO.getAddress().getState(), 
-	         objDTO.getAddress().getContry())
+	        null, 
+	        objDTO.getAddress().getTitle(),
+	        objDTO.getAddress().getStreet(), 
+	        objDTO.getAddress().getDistrict(), 
+	        objDTO.getAddress().getCep(), 
+	        objDTO.getAddress().getCity(), 
+	        objDTO.getAddress().getState(), 
+	        objDTO.getAddress().getContry())
 	    );	    
 	    newEvent.setAddress(address);
 	    
@@ -113,6 +121,7 @@ public class EventService {
 		eventRepository.deleteById(id);
 	}
 
+	@Transactional
 	private void dataUpdates(EventDTO objDTO, Event oldObj) {
 		oldObj.setTitle(objDTO.getTitle());
 		oldObj.setSubTitle(objDTO.getSubTitle());
@@ -120,35 +129,65 @@ public class EventService {
 		oldObj.setDeadline(objDTO.getDeadline());
 		oldObj.setFrontCover(objDTO.getFrontCover());
 		oldObj.setCapacity(objDTO.getCapacity());
-		if(objDTO.getAddress() != null) {
-		    oldObj.setAddress(objDTO.getAddress());
-		}
 		
-		if(objDTO.getTickets() != null && !objDTO.getTickets().isEmpty()) {
-		    List<Ticket> tickets = new ArrayList<>();
-	        for (Ticket ticket : objDTO.getTickets()) {
-	            tickets.add(
-	                ticketRepository.save(new Ticket(
-	                    null, 
-	                    ticket.getDescription(), 
-	                    ticket.getValueTicket(), 
-	                    ticket.getTicketClassification(), 
-	                    ticket.getExpirationDate(), 
-	                    ticket.getNumberOfTicketsPerRating(), 
-	                    ticket.getStatusTicket(),
-	                    oldObj)
-	                )
-	            );
-	        }
-		}
+		updateEventAddress(objDTO, oldObj);
+        updateListTicketsByEvent(objDTO, oldObj);
 		
 		List<Categories> categoriesList = new ArrayList<>();
-        for (Categories category : objDTO.getCategories()) {
-            Optional<Categories> categoryFound = categoriesRepository.findById(category.getId());
-            if(categoryFound.isPresent()) {
-                categoriesList.add(categoryFound.get());
+		for (Categories category : objDTO.getCategories()) {
+		    Optional<Categories> categoryFound = categoriesRepository.findById(category.getId());
+		    if(categoryFound.isPresent()) {
+		        categoriesList.add(categoryFound.get());
+		    }
+		}
+		oldObj.setCategories(categoriesList);
+	}
+
+    private void updateEventAddress(EventDTO objDTO, Event oldObj) {
+        if(objDTO.getAddress() != null) {
+		    if(objDTO.getAddress().getId() != null) {
+		        objDTO.getAddress().setEvent(oldObj);
+		        AddressDTO addressDTO = new AddressDTO(objDTO.getAddress());
+		        addressService.update(objDTO.getAddress().getId(), addressDTO);
+		    } else {
+		        Address address = addressRepository.save(new Address(
+	                 null, 
+	                 objDTO.getAddress().getTitle(),
+	                 objDTO.getAddress().getStreet(), 
+	                 objDTO.getAddress().getDistrict(), 
+	                 objDTO.getAddress().getCep(), 
+	                 objDTO.getAddress().getCity(), 
+	                 objDTO.getAddress().getState(), 
+	                 objDTO.getAddress().getContry())
+	            );
+		        address.setEvent(oldObj);
+		        oldObj.setAddress(address);
+		    }
+		}
+    }
+
+    private void updateListTicketsByEvent(EventDTO objDTO, Event oldObj) {
+        if (objDTO.getTickets() != null) {
+            List<Ticket> tickets = new ArrayList<>();
+            for (Ticket ticket : objDTO.getTickets()) {
+                if (ticket.getId() != null) {
+                    ticket.setEvent(oldObj);
+                    TicketDTO ticketDTO = new TicketDTO(ticket);
+                    ticketService.update(ticket.getId(), ticketDTO);
+                } else {
+                    tickets.add(
+                        ticketRepository.save(new Ticket(
+                            null,
+                            ticket.getDescription(),
+                            ticket.getValueTicket(),
+                            ticket.getTicketClassification(),
+                            ticket.getExpirationDate(),
+                            ticket.getNumberOfTicketsPerRating(),
+                            ticket.getStatusTicket(),
+                            oldObj))
+                    );
+                }
             }
         }
-        oldObj.setCategories(categoriesList);
-	}
+    }
 }

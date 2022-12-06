@@ -51,7 +51,7 @@ public class TicketService {
     }
 
     private Ticket fromDTO(Ticket newObj, TicketDTO objDTO) {
-       // newObj.setId(objDTO.getId());
+        newObj.setId(objDTO.getId());
         newObj.setDescription(objDTO.getDescription());
         newObj.setExpirationDate(objDTO.getExpirationDate());
         newObj.setTicketClassification(objDTO.getTicketClassification());

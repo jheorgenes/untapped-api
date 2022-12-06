@@ -88,6 +88,8 @@ public class AddressService {
     }
 
     private void dataUpdate(AddressDTO objDTO, Address oldObj) {
+        oldObj.setId(objDTO.getId());
+        oldObj.setTitle(objDTO.getTitle());
         oldObj.setStreet(objDTO.getStreet());
         oldObj.setDistrict(objDTO.getDistrict());
         oldObj.setCep(objDTO.getCep());

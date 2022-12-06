@@ -50,7 +50,7 @@ public class EventDTO {
 	
 	private String frontCover;
 	
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	@Valid
 	private Address address;
 	

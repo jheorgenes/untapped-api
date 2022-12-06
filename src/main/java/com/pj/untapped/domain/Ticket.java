@@ -50,9 +50,9 @@ public class Ticket implements Serializable {
     
     private Integer statusTicket;
     
-    @JsonIgnoreProperties({ "subTitle", "photos", "media", "frontCover", "capacity", "description", "tickets", "categories", "descriptionCategorys" })
     @ManyToOne
     @JoinColumn(name = "event_id")
+    @JsonIgnoreProperties({ "subTitle", "photos", "media", "frontCover", "capacity", "description", "tickets", "categories", "descriptionCategorys" })
     private Event event;
     
     public Ticket(
