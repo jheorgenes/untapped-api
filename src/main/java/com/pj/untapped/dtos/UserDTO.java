@@ -114,6 +114,10 @@ public class UserDTO implements Serializable {
         return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -128,10 +132,6 @@ public class UserDTO implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getCpf() {

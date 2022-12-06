@@ -109,7 +109,7 @@ public class UserServices implements UserDetailsService {
         oldObj.setEmail(objDTO.getEmail());
         String newPassword = encriptPassword(objDTO.getPassword());
         oldObj.setPassword(newPassword);
-        objDTO.setFullName(objDTO.getFullName());
+        oldObj.setFullname(objDTO.getFullName());
         oldObj.setCpf(objDTO.getCpf());
         oldObj.setBirthDate(objDTO.getBirthDate());
         oldObj.setAvatar(objDTO.getAvatar());
