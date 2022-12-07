@@ -72,7 +72,7 @@ public class OrderService {
             newTicketOrder.setOrder(orderSave);
             newTicketOrder.setTicket(ticketOrder.getTicket());
             priceTotal += (newTicketOrder.getPrice() * newTicketOrder.getQuantity());
-            newTicketOrder.setQrCode(gerarDigitosAleatorios(12));
+            newTicketOrder.setQrCode(generateRandomDigits(12));
             tickets.add(ticketsOrderRepository.save(newTicketOrder));
         }
         orderSave.setTotalValue(priceTotal);
@@ -121,10 +121,10 @@ public class OrderService {
         orderSave.setTicketsOrder(tickets);
     }
     
-    private static String gerarDigitosAleatorios(int digitos) {
+    private static String generateRandomDigits(int numberOfDigits) {
         StringBuilder text = new StringBuilder();
         Random random = new Random();
-        for (int i = 0; i < digitos; i++) {
+        for (int i = 0; i < numberOfDigits; i++) {
             text.append(random.nextInt(10)); // gerar um número aleatório entre 0 e 9
         }
         return text.toString();

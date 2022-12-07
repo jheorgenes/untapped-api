@@ -55,19 +55,8 @@ public class AddressService {
         address.setLatitude(objDTO.getLatitude());
         address.setLongitude(objDTO.getLongitude());
 
-        if (objDTO.getUserId() != null) {
-            Optional<User> userEncontrado = userRepository.findById(objDTO.getUserId());
-            if (userEncontrado.isPresent()) {
-                address.setUser(userEncontrado.get());
-            }
-        }
-
-        if (objDTO.getEventId() != null) {
-            Optional<Event> eventEncontrado = eventRepository.findById(objDTO.getEventId());
-            if (eventEncontrado.isPresent()) {
-                address.setEvent(eventEncontrado.get());
-            }
-        }
+        findUserRelated(objDTO, address);
+        findEventRelated(objDTO, address);
 
         return addressRepository.save(address);
     }
@@ -101,17 +90,24 @@ public class AddressService {
         oldObj.setLatitude(objDTO.getLatitude());
         oldObj.setLongitude(objDTO.getLongitude());
 
-        if (objDTO.getUserId() != null) {
-            Optional<User> userEncontrado = userRepository.findById(objDTO.getUserId());
+        findUserRelated(objDTO, oldObj);
+        findEventRelated(objDTO, oldObj);
+    }
+
+    private void findUserRelated(AddressDTO dto, Address obj) {
+        if (dto.getUserId() != null) {
+            Optional<User> userEncontrado = userRepository.findById(dto.getUserId());
             if (userEncontrado.isPresent()) {
-                oldObj.setUser(userEncontrado.get());
+                obj.setUser(userEncontrado.get());
             }
         }
-
-        if (objDTO.getEventId() != null) {
-            Optional<Event> eventEncontrado = eventRepository.findById(objDTO.getEventId());
+    }
+    
+    private void findEventRelated(AddressDTO dto, Address obj) {
+        if (dto.getEventId() != null) {
+            Optional<Event> eventEncontrado = eventRepository.findById(dto.getEventId());
             if (eventEncontrado.isPresent()) {
-                oldObj.setEvent(eventEncontrado.get());
+                obj.setEvent(eventEncontrado.get());
             }
         }
     }

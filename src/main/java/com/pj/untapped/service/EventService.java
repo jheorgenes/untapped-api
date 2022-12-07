@@ -67,54 +67,25 @@ public class EventService {
 	        objDTO.getDeadline(), 
 	        objDTO.getFrontCover(), 
 	        objDTO.getCapacity(), 
-	        objDTO.getDescription()
-	    );
+	        objDTO.getDescription());
 	    
-	    Address address = addressRepository.save(new Address(
-	        null, 
-	        objDTO.getAddress().getTitle(),
-	        objDTO.getAddress().getStreet(), 
-	        objDTO.getAddress().getDistrict(), 
-	        objDTO.getAddress().getCep(), 
-	        objDTO.getAddress().getCity(), 
-	        objDTO.getAddress().getState(), 
-	        objDTO.getAddress().getCountry())
-	    );	    
+	    Address address = addNewAddress(objDTO, newEvent);
 	    newEvent.setAddress(address);
 	    
-	    List<Categories> categoriesList = new ArrayList<>();
-	    for (Categories category : objDTO.getCategories()) {
-	        Optional<Categories> categoryFound = categoriesRepository.findById(category.getId());
-	        if(categoryFound.isPresent()) {
-	            categoriesList.add(categoryFound.get());
-	        }
-	    }
-	    newEvent.setCategories(categoriesList);
-	    
+	    setCategoriesRegisteredInTheCategoriesListOfThisEvent(objDTO, newEvent);
 	    Event eventSave = eventRepository.save(newEvent);
-	    // Criando os tickets conforme demanda 
+
 	    List<Ticket> tickets = new ArrayList<>();
 	    for (Ticket ticket : objDTO.getTickets()) {
-	        tickets.add(
-	            ticketRepository.save(new Ticket(
-	                null, 
-	                ticket.getDescription(), 
-	                ticket.getValueTicket(), 
-	                ticket.getTicketClassification(), 
-	                ticket.getExpirationDate(), 
-	                ticket.getNumberOfTicketsPerRating(), 
-	                ticket.getStatusTicket(),
-	                eventSave)
-	            )
-	        );
+	        insertNewTicketInEventTicketList(eventSave, tickets, ticket);
         }
 	    return eventSave;
 	}
 
 	public Event update(Integer id, @Valid EventDTO objDTO) {
-		Event oldObj = findById(id);
-		dataUpdates(objDTO, oldObj);
-		return eventRepository.save(oldObj);
+		Event oldEvent = findById(id);
+		dataUpdates(objDTO, oldEvent);
+		return eventRepository.save(oldEvent);
 	}
 	
 	public void delete(Integer id) {
@@ -122,76 +93,89 @@ public class EventService {
 	}
 
 	@Transactional
-	private void dataUpdates(EventDTO objDTO, Event oldObj) {
-		oldObj.setTitle(objDTO.getTitle());
-		oldObj.setSubTitle(objDTO.getSubTitle());
-		oldObj.setDateEntry(objDTO.getDateEntry());
-		oldObj.setDeadline(objDTO.getDeadline());
-		oldObj.setFrontCover(objDTO.getFrontCover());
-		oldObj.setCapacity(objDTO.getCapacity());
+	private void dataUpdates(EventDTO eventDTO, Event oldEvent) {
+		oldEvent.setTitle(eventDTO.getTitle());
+		oldEvent.setSubTitle(eventDTO.getSubTitle());
+		oldEvent.setDateEntry(eventDTO.getDateEntry());
+		oldEvent.setDeadline(eventDTO.getDeadline());
+		oldEvent.setFrontCover(eventDTO.getFrontCover());
+		oldEvent.setCapacity(eventDTO.getCapacity());
 		
-		updateEventAddress(objDTO, oldObj);
-        updateListTicketsByEvent(objDTO, oldObj);
-		
-		List<Categories> categoriesList = new ArrayList<>();
-		for (Categories category : objDTO.getCategories()) {
+		updateOrInsertAddressInEvent(eventDTO, oldEvent);
+        updateListTicketsByEvent(eventDTO, oldEvent);	
+		setCategoriesRegisteredInTheCategoriesListOfThisEvent(eventDTO, oldEvent);
+	}
+	
+	private Address addNewAddress(EventDTO eventDTO, Event event) {
+        Address address = new Address(
+            null, 
+            eventDTO.getAddress().getTitle(),
+            eventDTO.getAddress().getStreet(), 
+            eventDTO.getAddress().getDistrict(), 
+            eventDTO.getAddress().getCep(), 
+            eventDTO.getAddress().getCity(), 
+            eventDTO.getAddress().getState(), 
+            eventDTO.getAddress().getCountry());  
+        address.setAddressComplement(eventDTO.getAddress().getAddressComplement());
+        address.setAddressNumber(eventDTO.getAddress().getAddressNumber());
+        address.setLatitude(eventDTO.getAddress().getLatitude());
+        address.setLongitude(eventDTO.getAddress().getLongitude());
+        //Salva Endereço sem relacionar com Evento (Relacionamento será feito no evento)
+        addressRepository.save(address); 
+        address.setEvent(event); 
+        return address;
+    }
+
+    private void setCategoriesRegisteredInTheCategoriesListOfThisEvent(EventDTO eventDTO, Event event) {
+        List<Categories> categoriesList = new ArrayList<>();
+		for (Categories category : eventDTO.getCategories()) {
 		    Optional<Categories> categoryFound = categoriesRepository.findById(category.getId());
 		    if(categoryFound.isPresent()) {
 		        categoriesList.add(categoryFound.get());
 		    }
 		}
-		oldObj.setCategories(categoriesList);
-	}
+		event.setCategories(categoriesList);
+    }
 
-    private void updateEventAddress(EventDTO objDTO, Event oldObj) {
-        if(objDTO.getAddress() != null) {
-		    if(objDTO.getAddress().getId() != null) {
-		        objDTO.getAddress().setEvent(oldObj);
-		        AddressDTO addressDTO = new AddressDTO(objDTO.getAddress());
-		        addressService.update(objDTO.getAddress().getId(), addressDTO);
+    private void updateOrInsertAddressInEvent(EventDTO eventDTO, Event event) {
+        if(eventDTO.getAddress() != null) {
+		    if(eventDTO.getAddress().getId() != null) {
+		        eventDTO.getAddress().setEvent(event);
+		        AddressDTO addressDTO = new AddressDTO(eventDTO.getAddress());
+		        addressService.update(eventDTO.getAddress().getId(), addressDTO);
 		    } else {
-		        Address address = addressRepository.save(new Address(
-	                 null, 
-	                 objDTO.getAddress().getTitle(),
-	                 objDTO.getAddress().getStreet(), 
-	                 objDTO.getAddress().getDistrict(), 
-	                 objDTO.getAddress().getCep(), 
-	                 objDTO.getAddress().getCity(), 
-	                 objDTO.getAddress().getState(), 
-	                 objDTO.getAddress().getCountry())
-	            );
-		        address.setAddressComplement(objDTO.getAddress().getAddressComplement());
-		        address.setAddressNumber(objDTO.getAddress().getAddressNumber());
-		        address.setLatitude(objDTO.getAddress().getLatitude());
-		        address.setLongitude(objDTO.getAddress().getLongitude());
-		        address.setEvent(oldObj);
-		        oldObj.setAddress(address);
+		        Address address = addNewAddress(eventDTO, event);
+		        event.setAddress(address);
 		    }
 		}
     }
 
-    private void updateListTicketsByEvent(EventDTO objDTO, Event oldObj) {
-        if (objDTO.getTickets() != null) {
+    private void updateListTicketsByEvent(EventDTO eventDTO, Event event) {
+        if (eventDTO.getTickets() != null) {
             List<Ticket> tickets = new ArrayList<>();
-            for (Ticket ticket : objDTO.getTickets()) {
+            for (Ticket ticket : eventDTO.getTickets()) {
                 if (ticket.getId() != null) {
-                    ticket.setEvent(oldObj);
+                    ticket.setEvent(event);
                     TicketDTO ticketDTO = new TicketDTO(ticket);
                     ticketService.update(ticket.getId(), ticketDTO);
                 } else {
-                    tickets.add(
-                        ticketRepository.save(new Ticket(
-                            null,
-                            ticket.getDescription(),
-                            ticket.getValueTicket(),
-                            ticket.getTicketClassification(),
-                            ticket.getExpirationDate(),
-                            ticket.getNumberOfTicketsPerRating(),
-                            ticket.getStatusTicket(),
-                            oldObj))
-                    );
+                    insertNewTicketInEventTicketList(event, tickets, ticket);
                 }
             }
         }
+    }
+    
+    private void insertNewTicketInEventTicketList(Event event, List<Ticket> tickets, Ticket ticket) {
+        Ticket newTicket = new Ticket(
+            null, 
+            ticket.getDescription(), 
+            ticket.getValueTicket(), 
+            ticket.getTicketClassification(), 
+            ticket.getExpirationDate(), 
+            ticket.getNumberOfTicketsPerRating(), 
+            ticket.getStatusTicket(),
+            event);
+        Ticket ticketSave = ticketRepository.save(newTicket);
+        tickets.add(ticketSave);
     }
 }
