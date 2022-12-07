@@ -48,7 +48,7 @@ public class AddressService {
             objDTO.getCep(), 
             objDTO.getCity(), 
             objDTO.getState(), 
-            objDTO.getContry()
+            objDTO.getCountry()
         );
         address.setAddressComplement(objDTO.getAddressComplement());
         address.setAddressNumber(objDTO.getAddressNumber());
@@ -95,7 +95,7 @@ public class AddressService {
         oldObj.setCep(objDTO.getCep());
         oldObj.setCity(objDTO.getCity());
         oldObj.setState(objDTO.getState());
-        oldObj.setCountry(objDTO.getContry());
+        oldObj.setCountry(objDTO.getCountry());
         oldObj.setAddressComplement(objDTO.getAddressComplement());
         oldObj.setAddressNumber(objDTO.getAddressNumber());
         oldObj.setLatitude(objDTO.getLatitude());

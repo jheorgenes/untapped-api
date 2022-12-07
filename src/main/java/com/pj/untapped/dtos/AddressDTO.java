@@ -37,7 +37,7 @@ public class AddressDTO {
 	private String state;
 	
 	@NotEmpty(message = "Contry is required")
-	private String contry;
+	private String country;
 	
 	private Double latitude;
 	
@@ -57,7 +57,7 @@ public class AddressDTO {
 		this.cep = obj.getCep();
 		this.city = obj.getCity();
 		this.state = obj.getState();
-		this.contry = obj.getCountry();
+		this.country = obj.getCountry();
 		this.latitude = obj.getLatitude();
 		this.longitude = obj.getLongitude();
 	}
