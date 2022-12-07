@@ -160,6 +160,10 @@ public class EventService {
 	                 objDTO.getAddress().getState(), 
 	                 objDTO.getAddress().getContry())
 	            );
+		        address.setAddressComplement(objDTO.getAddress().getAddressComplement());
+		        address.setAddressNumber(objDTO.getAddress().getAddressNumber());
+		        address.setLatitude(objDTO.getAddress().getLatitude());
+		        address.setLongitude(objDTO.getAddress().getLongitude());
 		        address.setEvent(oldObj);
 		        oldObj.setAddress(address);
 		    }
