@@ -78,7 +78,7 @@ public class EventService {
 	        objDTO.getAddress().getCep(), 
 	        objDTO.getAddress().getCity(), 
 	        objDTO.getAddress().getState(), 
-	        objDTO.getAddress().getContry())
+	        objDTO.getAddress().getCountry())
 	    );	    
 	    newEvent.setAddress(address);
 	    
@@ -158,7 +158,7 @@ public class EventService {
 	                 objDTO.getAddress().getCep(), 
 	                 objDTO.getAddress().getCity(), 
 	                 objDTO.getAddress().getState(), 
-	                 objDTO.getAddress().getContry())
+	                 objDTO.getAddress().getCountry())
 	            );
 		        address.setAddressComplement(objDTO.getAddress().getAddressComplement());
 		        address.setAddressNumber(objDTO.getAddress().getAddressNumber());

@@ -51,7 +51,7 @@ public class Address implements Serializable {
 	private String state;
 	
 	@NotEmpty(message = "Contry is required")
-	private String contry;
+	private String country;
 	
 	private Double latitude;
 	
@@ -67,7 +67,7 @@ public class Address implements Serializable {
 	@JoinColumn(name = "event_id")
 	private Event event;
 
-	public Address(Integer id, String title, String street, String district, String cep, String city, String state, String contry) {
+	public Address(Integer id, String title, String street, String district, String cep, String city, String state, String country) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -76,6 +76,6 @@ public class Address implements Serializable {
 		this.cep = cep;
 		this.city = city;
 		this.state = state;
-		this.contry = contry;
+		this.country = country;
 	}
 }

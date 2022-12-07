@@ -135,7 +135,7 @@ public class UserServices implements UserDetailsService {
                     address.getCep(),
                     address.getCity(),
                     address.getState(),
-                    address.getContry());
+                    address.getCountry());
                 newAddress.setAddressNumber(address.getAddressNumber());
                 newAddress.setAddressComplement(address.getAddressComplement());
                 newAddress.setLatitude(address.getLatitude());

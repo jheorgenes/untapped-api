@@ -57,7 +57,7 @@ public class AddressDTO {
 		this.cep = obj.getCep();
 		this.city = obj.getCity();
 		this.state = obj.getState();
-		this.contry = obj.getContry();
+		this.contry = obj.getCountry();
 		this.latitude = obj.getLatitude();
 		this.longitude = obj.getLongitude();
 	}
