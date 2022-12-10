@@ -63,6 +63,8 @@ public class User implements UserDetails, Serializable {
 
     @Column(name = "enabled")
     private Boolean enabled;
+    
+    private Integer userCreated;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_permission", 

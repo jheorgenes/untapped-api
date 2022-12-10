@@ -43,6 +43,12 @@ public class EventResource {
 		return ResponseEntity.ok().body(eventList);
 	}
 	
+	@GetMapping(value = "/user/{userId}")
+	public ResponseEntity<List<EventDTO>> findAllByUserId(@PathVariable Integer userId){
+	    List<EventDTO> eventList = eventService.findAllByUserId(userId).stream().map(obj -> new EventDTO(obj)).collect(Collectors.toList());
+	    return ResponseEntity.ok().body(eventList);
+	}
+	
 	@GetMapping("/search/{title:.+}")
 	public ResponseEntity<List<EventDTO>> searchByTitle(@PathVariable String title){
 	    List<EventDTO> eventList = eventService.searchByTitle(title).stream().map(obj -> new EventDTO(obj)).collect(Collectors.toList());

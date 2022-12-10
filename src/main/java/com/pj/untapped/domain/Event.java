@@ -62,6 +62,8 @@ public class Event implements Serializable {
     @OrderBy("id")
     private List<Ticket> tickets;
     
+    private Integer userId;
+    
     @ManyToMany
     @JoinTable(name = "events_category", 
         joinColumns = { @JoinColumn(name = "category_id") }, 

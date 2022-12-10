@@ -14,4 +14,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
     @Query("SELECT e FROM Event e WHERE e.title LIKE %:title%")
     List<Event> findByTitleWith(@Param("title") String title);
+    
+    @Query("SELECT e FROM Event e WHERE e.userId = :userId")
+    List<Event> findAllByUserId(@Param("userId") Integer userId);
 }

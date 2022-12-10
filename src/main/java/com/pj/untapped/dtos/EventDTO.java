@@ -60,6 +60,8 @@ public class EventDTO {
 	@NotEmpty(message = "Title is required")
 	private String description;
 	
+	private Integer userId;
+	
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ticket> tickets;
 	
@@ -82,5 +84,6 @@ public class EventDTO {
 		this.description = obj.getDescription();
 		this.tickets = obj.getTickets();
 		this.categories = obj.getCategories();
+		this.userId = obj.getUserId();
 	}
 }

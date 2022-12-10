@@ -232,6 +232,14 @@ public class DBService { //Classe para instanciar objetos no banco
 		categoriesRepository.saveAll(Arrays.asList(ct1, ct2, ct3, ct4, ct5, ct6, ct7, ct8, ct9, ct10, ct11, ct12, ct13, ct14, ct15));
         permissionRepository.saveAll(Arrays.asList(per1, per2, per3));
 		userRepository.saveAll(Arrays.asList(user1));
+		
+		 ev1.setUserId(user1.getId());
+		 ev2.setUserId(user1.getId());
+		 ev3.setUserId(user1.getId());
+		 ev4.setUserId(user1.getId());
+		 ev5.setUserId(user1.getId());
+		 ev6.setUserId(user1.getId());
+		 
 		addressRepository.saveAll(Arrays.asList(ad1, ad2, ad3, ad4));
 		eventRepository.saveAll(Arrays.asList(ev1, ev2, ev3, ev4, ev5, ev6));
 		ticketRepository.saveAll(Arrays.asList(tkt1, tkt2, tkt3, tkt4, tkt5, tkt6, tkt7, tkt8, tkt9, tkt10, tkt11, tkt12, tkt13, tkt14, tkt15));

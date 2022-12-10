@@ -57,6 +57,10 @@ public class EventService {
 	public List<Event> findAll() {
 		return eventRepository.findAll();
 	}
+	
+	public List<Event> findAllByUserId(Integer userId) {
+        return eventRepository.findAllByUserId(userId);
+    }
 
 	public Event create(@Valid EventDTO objDTO) {
 	    Event newEvent = new Event(
@@ -69,6 +73,7 @@ public class EventService {
 	        objDTO.getCapacity(), 
 	        objDTO.getDescription());
 	    
+	    newEvent.setUserId(objDTO.getUserId());
 	    Address address = addNewAddress(objDTO, newEvent);
 	    newEvent.setAddress(address);
 	    
@@ -100,7 +105,7 @@ public class EventService {
 		oldEvent.setDeadline(eventDTO.getDeadline());
 		oldEvent.setFrontCover(eventDTO.getFrontCover());
 		oldEvent.setCapacity(eventDTO.getCapacity());
-		
+		oldEvent.setUserId(eventDTO.getUserId());
 		updateOrInsertAddressInEvent(eventDTO, oldEvent);
         updateListTicketsByEvent(eventDTO, oldEvent);	
 		setCategoriesRegisteredInTheCategoriesListOfThisEvent(eventDTO, oldEvent);
