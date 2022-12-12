@@ -95,22 +95,22 @@ public class DBService { //Classe para instanciar objetos no banco
 		
 		/*Criando Eventos*/
 		Event ev1 = new Event(null, 
-		        "Cabaré 10 anos", 
+		        "Gusttavo Lima e Leonardo", 
 		        "Uma festa promovida por Leonardo e Gusttavo Lima", 
 		        LocalDateTime.now(), 
 		        LocalDateTime.now().plusHours(5), 
-		        "7236239LeonardoEGusttavoLima.jpg", 
+		        "3023332GusttavoLimaELeonardo1220x650.png", 
 		        35000, 
 		        ad3, 
 		        "Grandes amigos, muita resenha. Venha prestigiar esses ícones da música Sertaneja");
 		ev1.setCategories(Arrays.asList(ct1, ct15));
-		
+		//1234011HugoeGuilherme.jpg
 		Event ev2 = new Event(null, 
 		        "Hugo e Guilherme", 
 		        "NOPELO 360", 
 		        LocalDateTime.now(), 
 		        LocalDateTime.now().plusHours(5), 
-		        "1234011HugoeGuilherme.jpg", 
+		        "5867784HugoEGuilherme1220x650.png", 
 		        30000, 
 		        ad3, 
 		        "Venha participar dessa festa espetacular chamada NOPELO 360 em Goiânia. Espaço para 35 Mil pessoas");
@@ -121,7 +121,7 @@ public class DBService { //Classe para instanciar objetos no banco
 		        "Ao Vivão", 
 		        LocalDateTime.now(), 
 		        LocalDateTime.now().plusHours(5), 
-		        "9933464MurilloRuff.png", 
+		        "9864545MurilloRuff1220x650.png", 
 		        20000, 
 		        ad3, 
 		        "Veja se você consegue escutar essa sem tomar uma!!");
@@ -132,18 +132,19 @@ public class DBService { //Classe para instanciar objetos no banco
 		        "Caldas Contry", 
 		        LocalDateTime.now(), 
 		        LocalDateTime.now().plusHours(4), 
-		        "5150304JoaoGomes.webp", 
+		        "4877570JoaoGomes1220x650.png",
 		        20000, 
 		        ad2, 
 		        "Não tem formigueiro mais o piseiro está na ativa");
 		ev4.setCategories(Arrays.asList(ct1, ct15));
-		
+		//2832158Vitinho_800x450.png
+		//"2013771Vitinho.png"
 		Event ev5 = new Event(null, 
 		        "Vitinho", 
 		        "Sonhos", 
 		        LocalDateTime.now(), 
 		        LocalDateTime.now().plusHours(3),
-		        "2013771Vitinho.png", 
+		        "8908135VitinhoCantor1220x650.png", 
 		        5000, 
 		        ad2, 
 		        "Venha realizar seus sonhos ouvindo a minha canção");
@@ -154,7 +155,7 @@ public class DBService { //Classe para instanciar objetos no banco
 		        "Tropicaliza", 
 		        LocalDateTime.now(), 
 		        LocalDateTime.now().plusHours(3), 
-		        "95926873030.jpg", 
+		        "23212443030_1220x650.png", 
 		        5000, 
 		        ad4, 
 		        "Direto da Bahia para cantar RAP pra vocês!");

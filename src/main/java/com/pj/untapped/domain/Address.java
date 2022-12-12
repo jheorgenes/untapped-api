@@ -50,7 +50,7 @@ public class Address implements Serializable {
 	@NotEmpty(message = "State is required")
 	private String state;
 	
-	@NotEmpty(message = "Contry is required")
+	@NotEmpty(message = "Country is required")
 	private String country;
 	
 	private Double latitude;
